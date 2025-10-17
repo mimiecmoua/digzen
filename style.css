@@ -41,7 +41,7 @@ body {
 
 /* === CHRONOMÈTRE === */
 .chronometre {
-  background-color: white;
+  background-color: rgb(232, 230, 230);
   padding: 15px;
   border-radius: 10px;
   width: 400px;
