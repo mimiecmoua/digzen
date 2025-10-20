@@ -133,5 +133,32 @@ function afficherMotAvecEffet(txt) {
   motDiv.style.animation = 'smoke-in 3s ease forwards';
 }
 
+// ---- Empêche la mise en veille de l'écran pendant la session ----
+let wakeLock = null;
+
+async function keepScreenOn() {
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+    console.log("🔋 L’écran restera allumé pendant la session DigZen.");
+    
+    document.addEventListener("visibilitychange", async () => {
+      if (wakeLock !== null && document.visibilityState === "visible") {
+        wakeLock = await navigator.wakeLock.request("screen");
+      }
+    });
+  } catch (err) {
+    console.error(`${err.name}, ${err.message}`);
+  }
+}
+
+// 🟢 On modifie le bouton "Start" pour combiner les deux actions
+const btnStart = document.getElementById("start");
+if (btnStart) {
+  btnStart.addEventListener("click", () => {
+    keepScreenOn(); // 🔒 empêche la mise en veille
+    start();        // 🕒 démarre le chrono (ta fonction déjà existante)
+  });
+}
+
 
 
