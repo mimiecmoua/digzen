@@ -1,4 +1,4 @@
-// script.js complet DigZen
+// script.js complet DigZen (version moderne mots magiques)
 
 document.addEventListener('DOMContentLoaded', () => {
   // Récupération des boutons
@@ -14,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ===== Variables =====
-let startTime = null;   // timestamp quand start
-let timer = null;       // interval ID
-let elapsed = 0;        // temps écoulé en ms
+let startTime = null;
+let timer = null;
+let elapsed = 0;
 
 // ===== Affichage =====
 function afficherTemps(ms) {
@@ -39,7 +39,7 @@ function chrono() {
   elapsed = now - startTime;
   afficherTemps(elapsed);
 
-  // Stop à 20 minutes (1200000ms)
+  // Stop à 20 minutes
   if (elapsed >= 20 * 60 * 1000) {
     stop();
     const motDiv = document.getElementById("mot-magique");
@@ -52,7 +52,7 @@ function chrono() {
 function start() {
   if (timer) return;
   startTime = Date.now() - elapsed; // reprend si pause
-  timer = setInterval(chrono, 100); // update toutes les 100ms pour fluidité
+  timer = setInterval(chrono, 100); // update toutes les 100ms
   lancerMotsMagiques();
   const btn = document.getElementById('start');
   if (btn) btn.disabled = true;
@@ -98,7 +98,7 @@ function lancerMotsMagiques() {
   afficherMotAvecEffet(mots[indexMot]);
   indexMot = (indexMot + 1) % mots.length;
 
-  // Changer le mot toutes les 5 secondes
+  // changer le mot toutes les 5 secondes
   intervalMots = setInterval(() => {
     if (elapsed >= 20 * 60 * 1000) {
       clearInterval(intervalMots);
@@ -125,17 +125,17 @@ function stopMotsMagiques(forceClear = false) {
 function afficherMotAvecEffet(txt) {
   const motDiv = document.getElementById("mot-magique");
   if (!motDiv) return;
+
   motDiv.textContent = txt;
 
   // Reset animation pour qu'elle se rejoue
-  motDiv.style.animation = 'none';
+  motDiv.classList.remove("showMagic");
   void motDiv.offsetWidth; // force reflow
-  motDiv.style.animation = 'smoke-in 3s ease forwards';
+  motDiv.classList.add("showMagic");
 }
 
-// ---- Empêche la mise en veille de l'écran pendant la session ----
+// ---- Empêche la mise en veille ----
 let wakeLock = null;
-
 async function keepScreenOn() {
   try {
     wakeLock = await navigator.wakeLock.request("screen");
@@ -151,14 +151,15 @@ async function keepScreenOn() {
   }
 }
 
-// 🟢 On modifie le bouton "Start" pour combiner les deux actions
+// 🟢 Bouton Start combine chrono + wakeLock
 const btnStart = document.getElementById("start");
 if (btnStart) {
   btnStart.addEventListener("click", () => {
-    keepScreenOn(); // 🔒 empêche la mise en veille
-    start();        // 🕒 démarre le chrono (ta fonction déjà existante)
+    keepScreenOn();
+    start();
   });
 }
+
 
 
 

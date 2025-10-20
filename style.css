@@ -158,35 +158,44 @@ button:hover {
     gap: 5px;
   }
 }
-/* --- Effet magique des mots --- */
+
+/* --- Effet moderne des mots magiques --- */
 .mot-magique {
-  position: relative;      /* passe de absolute à relative */
-  margin: 20px 0;          /* espace entre chrono et footer */
+  position: relative;
+  margin: 20px 0;
   text-align: center;
   width: 100%;
   font-size: 24px;
-  color: rgb(255, 127, 80);
+  color: #C2A878; /* doré doux Japandi */
   font-family: 'Poppins', sans-serif;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   opacity: 0;
-  animation: smoke-in 2s ease forwards;
+  animation: floatFade 5s ease-in-out infinite;
 }
 
-@keyframes smoke-in {
+/* Animation fluide : monte, devient visible, disparaît doucement */
+@keyframes floatFade {
   0% {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    filter: blur(4px);
+    transform: translateY(15px);
   }
-  50% {
+  10% {
     opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(1px);
+    transform: translateY(0px);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0px);
   }
   100% {
     opacity: 0;
-    transform: translateY(-20px) scale(1.05);
-    filter: blur(6px);
+    transform: translateY(-15px);
   }
 }
+.mot-magique {
+  background: linear-gradient(90deg, #C2A878, #E9E3D9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
