@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
 /* === RESET & BASE === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Righteous', cursive;
+  font-family: 'Poppins', sans-serif;
 }
 
 html, body {
@@ -32,7 +32,7 @@ body {
 
 /* === TITRE === */
 .title {
-  font-family: 'Righteous', cursive;
+  font-family: 'Poppins', sans-serif;
   font-size: 36px;
   color: rgb(254, 253, 253);
   text-align: center;
@@ -43,7 +43,7 @@ body {
 .chronometre {
   background-color: rgb(232, 230, 230);
   padding: 15px;
-  border-radius: 10px;
+  border-radius: 0px;
   width: 400px;
   max-width: 90vw;
   text-align: center;
@@ -63,7 +63,7 @@ body {
 }
 
 .tim span {
-  font-family: 'Righteous', cursive;
+  font-family: 'Poppins', sans-serif;
   padding: 5px;
 }
 
@@ -78,7 +78,7 @@ button {
   color: rgb(255, 182, 193);
   font-size: 15px;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 1px;
   width: 31%;
   border: 0;
   letter-spacing: 1px;
@@ -166,7 +166,7 @@ button:hover {
   width: 100%;
   font-size: 24px;
   color: rgb(255, 127, 80);
-  font-family: 'Righteous', cursive;
+  font-family: 'Poppins', sans-serif;
   letter-spacing: 2px;
   opacity: 0;
   animation: smoke-in 2s ease forwards;
