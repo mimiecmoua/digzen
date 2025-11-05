@@ -33,28 +33,28 @@ const magicWords = {
   ]
 };
 
-// --- Textes traduits dans la page ---
+// --- Textes traduits dans la page (footer + "Créé par WebOara") ---
 const translations = {
   fr: {
-    "createdBy": "Créé par WebOara",
-    "mentions": "Mentions légales",
-    "privacy": "Politique de confidentialité (RGPD)",
-    "terms": "Conditions d’utilisation",
-    "guide": "Guide d'utilisation"
+    createdBy: "Créé par",
+    mentions: "Mentions légales",
+    privacy: "Politique de confidentialité (RGPD)",
+    terms: "Conditions d’utilisation",
+    guide: "Guide d'utilisation"
   },
   en: {
-    "createdBy": "Created by WebOara",
-    "mentions": "Legal notices",
-    "privacy": "Privacy policy (GDPR)",
-    "terms": "Terms of use",
-    "guide": "User guide"
+    createdBy: "Created by",
+    mentions: "Legal notices",
+    privacy: "Privacy policy (GDPR)",
+    terms: "Terms of use",
+    guide: "User guide"
   },
   de: {
-    "createdBy": "Erstellt von WebOara",
-    "mentions": "Rechtliche Hinweise",
-    "privacy": "Datenschutzrichtlinie (DSGVO)",
-    "terms": "Nutzungsbedingungen",
-    "guide": "Benutzerhandbuch"
+    createdBy: "Erstellt von",
+    mentions: "Rechtliche Hinweise",
+    privacy: "Datenschutzrichtlinie (DSGVO)",
+    terms: "Nutzungsbedingungen",
+    guide: "Benutzerhandbuch"
   }
 };
 
@@ -96,7 +96,7 @@ function chrono() {
   }
 }
 
-// ===== Fonctions boutons =====
+// ===== Fonctions boutons (toujours en anglais) =====
 function start() {
   if (timer) return;
   startTime = Date.now() - elapsed;
@@ -140,7 +140,6 @@ function lancerMotsMagiques() {
   if (intervalMots) clearInterval(intervalMots);
 
   const list = magicWords[currentLang];
-
   afficherMotAvecEffet(list[indexMot]);
   indexMot = (indexMot + 1) % list.length;
 
@@ -166,7 +165,7 @@ function stopMotsMagiques(forceClear = false) {
   }
 }
 
-// ===== Traduction de la page =====
+// ===== Traduction de la page (footer + créé par WebOara) =====
 function translatePage(lang) {
   currentLang = lang;
   localStorage.setItem("lang", lang);
