@@ -20,6 +20,33 @@ body {
   min-height: 100vh;
   background-color: rgb(18, 17, 17);
 }
+.language-switcher {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+}
+
+.flag {
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.flag:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 600px) {
+  .flag {
+    width: 24px;
+    height: 16px;
+  }
+}
+
 
 /* === STRUCTURE PRINCIPALE === */
 .container {

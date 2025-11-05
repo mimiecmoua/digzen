@@ -1,24 +1,76 @@
-// script.js complet DigZen (version moderne mots magiques)
+// ==============================
+// DigZen – Chrono + Mots magiques + Traductions
+// ==============================
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Récupération des boutons
-  const btnStart = document.getElementById('start');
-  const btnStop = document.getElementById('stop');
-  const btnReset = document.getElementById('reset');
+// --- Mots magiques ---
+const magicWords = {
+  fr: [
+    "Mâche lentement 🍴",
+    "Respire profondément 🌿",
+    "Pose ta fourchette ✋",
+    "Savoure chaque bouchée 😌",
+    "Écoute ton corps 💫",
+    "Bois un peu d’eau 💧",
+    "Sois dans l’instant présent 🕊️"
+  ],
+  en: [
+    "Chew slowly 🍴",
+    "Breathe deeply 🌿",
+    "Put down your fork ✋",
+    "Savor each bite 😌",
+    "Listen to your body 💫",
+    "Drink some water 💧",
+    "Be in the present moment 🕊️"
+  ],
+  de: [
+    "Kaue langsam 🍴",
+    "Atme tief ein 🌿",
+    "Leg deine Gabel ab ✋",
+    "Genieße jeden Bissen 😌",
+    "Hör auf deinen Körper 💫",
+    "Trink etwas Wasser 💧",
+    "Bleibe im jetzigen Moment 🕊️"
+  ]
+};
 
-  if (btnStart) btnStart.addEventListener('click', start);
-  if (btnStop) btnStop.addEventListener('click', stop);
-  if (btnReset) btnReset.addEventListener('click', reset);
+// --- Textes traduits dans la page ---
+const translations = {
+  fr: {
+    "createdBy": "Créé par WebOara",
+    "mentions": "Mentions légales",
+    "privacy": "Politique de confidentialité (RGPD)",
+    "terms": "Conditions d’utilisation",
+    "guide": "Guide d'utilisation"
+  },
+  en: {
+    "createdBy": "Created by WebOara",
+    "mentions": "Legal notices",
+    "privacy": "Privacy policy (GDPR)",
+    "terms": "Terms of use",
+    "guide": "User guide"
+  },
+  de: {
+    "createdBy": "Erstellt von WebOara",
+    "mentions": "Rechtliche Hinweise",
+    "privacy": "Datenschutzrichtlinie (DSGVO)",
+    "terms": "Nutzungsbedingungen",
+    "guide": "Benutzerhandbuch"
+  }
+};
 
-  afficherTemps(0); // affichage initial
-});
+// --- Langue actuelle ---
+let currentLang = localStorage.getItem("lang") || "fr";
 
-// ===== Variables =====
+// ===== Chrono =====
 let startTime = null;
 let timer = null;
 let elapsed = 0;
 
-// ===== Affichage =====
+// ===== Mots magiques =====
+let indexMot = 0;
+let intervalMots = null;
+
+// --- Affichage du chrono ---
 function afficherTemps(ms) {
   const totalSeconds = Math.floor(ms / 1000);
   const secondes = totalSeconds % 60;
@@ -27,20 +79,16 @@ function afficherTemps(ms) {
 
   const tim = document.querySelector(".tim");
   if (!tim) return;
-  tim.innerHTML = `
-    <span>${heures} h</span>:
-    <span>${minutes} min</span>:
-    <span>${secondes} s</span>`;
+  tim.innerHTML = `<span>${heures} h</span>:<span>${minutes} min</span>:<span>${secondes} s</span>`;
 }
 
-// ===== Chrono =====
+// --- Chrono en cours ---
 function chrono() {
   const now = Date.now();
   elapsed = now - startTime;
   afficherTemps(elapsed);
 
-  // Stop à 20 minutes
-  if (elapsed >= 20 * 60 * 1000) {
+  if (elapsed >= 20 * 60 * 1000) { // 20 minutes
     stop();
     const motDiv = document.getElementById("mot-magique");
     if (motDiv) motDiv.textContent = "✅ 20 minutes écoulées — prends un moment.";
@@ -48,11 +96,11 @@ function chrono() {
   }
 }
 
-// ===== Contrôles =====
+// ===== Fonctions boutons =====
 function start() {
   if (timer) return;
-  startTime = Date.now() - elapsed; // reprend si pause
-  timer = setInterval(chrono, 100); // update toutes les 100ms
+  startTime = Date.now() - elapsed;
+  timer = setInterval(chrono, 100);
   lancerMotsMagiques();
   const btn = document.getElementById('start');
   if (btn) btn.disabled = true;
@@ -75,18 +123,15 @@ function reset() {
 }
 
 // ===== Mots magiques =====
-const mots = [
-  "Mâche lentement 🍴",
-  "Respire profondément 🌿",
-  "Pose ta fourchette ✋",
-  "Savoure chaque bouchée 😌",
-  "Écoute ton corps 💫",
-  "Bois un peu d’eau 💧",
-  "Sois dans l’instant présent 🕊️"
-];
+function afficherMotAvecEffet(txt) {
+  const motDiv = document.getElementById("mot-magique");
+  if (!motDiv) return;
 
-let indexMot = 0;
-let intervalMots = null;
+  motDiv.textContent = txt;
+  motDiv.classList.remove("showMagic");
+  void motDiv.offsetWidth;
+  motDiv.classList.add("showMagic");
+}
 
 function lancerMotsMagiques() {
   const motDiv = document.getElementById("mot-magique");
@@ -94,19 +139,19 @@ function lancerMotsMagiques() {
 
   if (intervalMots) clearInterval(intervalMots);
 
-  // montrer le premier mot tout de suite
-  afficherMotAvecEffet(mots[indexMot]);
-  indexMot = (indexMot + 1) % mots.length;
+  const list = magicWords[currentLang];
 
-  // changer le mot toutes les 5 secondes
+  afficherMotAvecEffet(list[indexMot]);
+  indexMot = (indexMot + 1) % list.length;
+
   intervalMots = setInterval(() => {
     if (elapsed >= 20 * 60 * 1000) {
       clearInterval(intervalMots);
       intervalMots = null;
       return;
     }
-    afficherMotAvecEffet(mots[indexMot]);
-    indexMot = (indexMot + 1) % mots.length;
+    afficherMotAvecEffet(list[indexMot]);
+    indexMot = (indexMot + 1) % list.length;
   }, 5000);
 }
 
@@ -121,26 +166,47 @@ function stopMotsMagiques(forceClear = false) {
   }
 }
 
-// ===== Animation des mots =====
-function afficherMotAvecEffet(txt) {
-  const motDiv = document.getElementById("mot-magique");
-  if (!motDiv) return;
+// ===== Traduction de la page =====
+function translatePage(lang) {
+  currentLang = lang;
+  localStorage.setItem("lang", lang);
+  document.documentElement.lang = lang;
 
-  motDiv.textContent = txt;
+  document.querySelectorAll("[data-translate]").forEach(el => {
+    const key = el.getAttribute("data-translate");
+    if (translations[lang][key]) el.textContent = translations[lang][key];
+  });
 
-  // Reset animation pour qu'elle se rejoue
-  motDiv.classList.remove("showMagic");
-  void motDiv.offsetWidth; // force reflow
-  motDiv.classList.add("showMagic");
+  // Redémarre les mots magiques dans la langue active
+  indexMot = 0;
+  if (timer) lancerMotsMagiques();
 }
 
-// ---- Empêche la mise en veille ----
+// ===== Gestion drapeaux =====
+document.getElementById("lang-fr")?.addEventListener("click", () => translatePage("fr"));
+document.getElementById("lang-en")?.addEventListener("click", () => translatePage("en"));
+document.getElementById("lang-de")?.addEventListener("click", () => translatePage("de"));
+
+// ===== Initialisation =====
+document.addEventListener("DOMContentLoaded", () => {
+  afficherTemps(0);
+
+  const btnStart = document.getElementById("start");
+  const btnStop = document.getElementById("stop");
+  const btnReset = document.getElementById("reset");
+
+  if (btnStart) btnStart.addEventListener("click", () => { keepScreenOn(); start(); });
+  if (btnStop) btnStop.addEventListener("click", stop);
+  if (btnReset) btnReset.addEventListener("click", reset);
+
+  translatePage(currentLang);
+});
+
+// ===== Empêche mise en veille =====
 let wakeLock = null;
 async function keepScreenOn() {
   try {
     wakeLock = await navigator.wakeLock.request("screen");
-    console.log("🔋 L’écran restera allumé pendant la session DigZen.");
-    
     document.addEventListener("visibilitychange", async () => {
       if (wakeLock !== null && document.visibilityState === "visible") {
         wakeLock = await navigator.wakeLock.request("screen");
@@ -151,14 +217,7 @@ async function keepScreenOn() {
   }
 }
 
-// 🟢 Bouton Start combine chrono + wakeLock
-const btnStart = document.getElementById("start");
-if (btnStart) {
-  btnStart.addEventListener("click", () => {
-    keepScreenOn();
-    start();
-  });
-}
+
 
 
 

@@ -18,6 +18,12 @@
   </script>
 </head>
 <body>
+  <div id="language-switcher" class="language-switcher">
+  <img src="france.png" alt="Français" id="lang-fr" class="flag">
+  <img src="royaume-uni.png" alt="English" id="lang-en" class="flag">
+  <img src="drapeau-allemand.png" alt="Allemand" id="lang-de" class="flag">
+</div>
+
     <div class="container"> <!-- nouveau container pour centrer verticalement -->
         <div class="title">DigZen</div> <!-- titre au-dessus -->
     <div class="chronometre">
@@ -37,16 +43,17 @@
       <!-- Zone magique -->
     <div id="mot-magique" class="mot-magique"></div>
      <!--Zone footer-->
-    <footer class="footer">
-  <p>© 2025 <strong>DigZen</strong> — Créé par 
+<footer class="footer">
+  <p>© 2025 <strong>DigZen</strong> — 
+    <span data-translate="createdBy">Créé par</span> 
     <a href="https://mimiecmoua.github.io/portfolio/" target="_blank" rel="noopener noreferrer">WebOara</a>
   </p>
   
   <div class="footer-links">
-    <a href="/mentions-legales.html">Mentions légales</a>
-    <a href="/politique-confidentialite.html">Politique de confidentialité (RGPD)</a>
-    <a href="/conditions-utilisation.html">Conditions d’utilisation</a>
-    <a href="/guide-utilisation.html">Guide d'utilisation</a>
+    <a href="/mentions-legales.html" data-translate="mentions">Mentions légales</a>
+    <a href="/politique-confidentialite.html" data-translate="privacy">Politique de confidentialité (RGPD)</a>
+    <a href="/conditions-utilisation.html" data-translate="terms">Conditions d’utilisation</a>
+    <a href="/guide-utilisation.html" data-translate="guide">Guide d'utilisation</a>
   </div>
   
   <div class="social-links">
@@ -58,6 +65,8 @@
 
 
     <script src="script.js"></script>
+    
+
 </body>
 </html>
 
