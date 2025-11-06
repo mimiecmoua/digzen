@@ -20,6 +20,8 @@ body.legal-page {
   background-color: rgb(18, 17, 17);
   color: #C2A878;
 }
+
+/* === LANG SWITCHER === */
 .language-switcher {
   position: fixed;
   top: 1rem;
@@ -27,6 +29,9 @@ body.legal-page {
   display: flex;
   gap: 8px;
   z-index: 1000;
+  background: rgba(0,0,0,0.25);
+  padding: 6px 8px;
+  border-radius: 8px;
 }
 
 .flag {
@@ -40,15 +45,30 @@ body.legal-page {
   transform: scale(1.1);
 }
 
+/* === RESPONSIVE FLAGS + MARGE POUR ÉVITER LE CHEVAUCHEMENT === */
 @media (max-width: 600px) {
+
+  .language-switcher {
+    top: 0.5rem;
+    left: 0.5rem;
+    gap: 5px;
+    padding: 4px 6px;
+  }
+
   .flag {
-    width: 24px;
-    height: 16px;
+    width: 22px;
+    height: 14px;
+  }
+
+  /* ✅ Pousse le contenu pour qu’il ne passe pas sous les drapeaux */
+  .legal-container {
+    padding-top: 80px !important;
   }
 }
 
+/* === MAIN CONTAINER === */
 main.legal-container {
-  flex: 1; /* pousse le footer vers le bas */
+  flex: 1;
   padding: 40px;
   max-width: 800px;
   margin: 0 auto;
@@ -99,7 +119,7 @@ main.legal-container {
   filter: invert(100%);
 }
 
-/* === RESPONSIVE === */
+/* === GLOBAL RESPONSIVE TEXT === */
 @media (max-width: 768px) {
   main.legal-container {
     padding: 20px;

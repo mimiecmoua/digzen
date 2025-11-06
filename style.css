@@ -46,8 +46,6 @@ body {
     height: 16px;
   }
 }
-
-
 /* === STRUCTURE PRINCIPALE === */
 .container {
   flex: 1; /* pousse le footer vers le bas */
@@ -56,7 +54,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 /* === TITRE === */
 .title {
   font-family: 'Poppins', sans-serif;
@@ -65,7 +62,6 @@ body {
   text-align: center;
   margin-bottom: 20px;
 }
-
 /* === CHRONOMÈTRE === */
 .chronometre {
   background-color: rgb(232, 230, 230);
@@ -76,7 +72,6 @@ body {
   text-align: center;
   box-shadow: 0 0 10px rgba(0,0,0,0.25);
 }
-
 .tim {
   margin: auto;
   width: 100%;
@@ -88,18 +83,15 @@ body {
   font-weight: 400;
   margin-bottom: 10px;
 }
-
 .tim span {
   font-family: 'Poppins', sans-serif;
   padding: 5px;
 }
-
 .controls {
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
-
 button {
   background-color: rgb(18, 17, 17);
   color: rgb(255, 182, 193);
@@ -112,18 +104,15 @@ button {
   transition: 0.3s;
   cursor: pointer;
 }
-
 button:hover {
   transform: scale(0.95);
 }
-
 .instructions {
   color: rgb(46,45,45);
   font-weight: 500;
   margin-top: 10px;
   min-height: 24px; /* espace réservé même quand vide */
 }
-
 /* === FOOTER === */
 .footer {
   margin-top: auto;
@@ -138,37 +127,31 @@ button:hover {
   align-items: center;
   gap: 10px;
 }
-
 .footer a {
   color: rgb(255, 182, 193);
   text-decoration: none;
   transition: 0.3s;
 }
-
 .footer a:hover {
   color: white;
   text-decoration: underline;
 }
-
 .footer-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
-
 .social-links img {
   width: 22px;
   height: 22px;
   filter: invert(80%) sepia(25%) saturate(250%) hue-rotate(20deg);
   transition: 0.3s;
 }
-
 .social-links img:hover {
   transform: scale(1.2);
   filter: invert(100%);
 }
-
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
   .title {
@@ -185,7 +168,6 @@ button:hover {
     gap: 5px;
   }
 }
-
 /* --- Effet moderne des mots magiques --- */
 .mot-magique {
   position: relative;
@@ -199,7 +181,6 @@ button:hover {
   opacity: 0;
   animation: floatFade 5s ease-in-out infinite;
 }
-
 /* Animation fluide : monte, devient visible, disparaît doucement */
 @keyframes floatFade {
   0% {

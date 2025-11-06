@@ -12,7 +12,7 @@ html, body {
   height: 100%;
 }
 
-/* === STRUCTURE === */
+/* === BODY STRUCTURE === */
 body.legal-page {
   display: flex;
   flex-direction: column;
@@ -20,6 +20,8 @@ body.legal-page {
   background-color: rgb(18, 17, 17);
   color: #C2A878;
 }
+
+/* === LANGUAGE SWITCHER (drapeaux) === */
 .language-switcher {
   position: fixed;
   top: 1rem;
@@ -27,6 +29,9 @@ body.legal-page {
   display: flex;
   gap: 8px;
   z-index: 1000;
+  background: rgba(0,0,0,0.25);
+  padding: 6px 8px;
+  border-radius: 8px;
 }
 
 .flag {
@@ -40,14 +45,28 @@ body.legal-page {
   transform: scale(1.1);
 }
 
+/* === RESPONSIVE FIX : drapeaux + espace anti-chevauchement === */
 @media (max-width: 600px) {
+
+  .language-switcher {
+    top: 0.5rem;
+    left: 0.5rem;
+    gap: 5px;
+    padding: 4px 6px;
+  }
+
   .flag {
-    width: 24px;
-    height: 16px;
+    width: 22px;
+    height: 14px;
+  }
+
+  /* ✅ Empêche les drapeaux de recouvrir le texte */
+  .legal-container {
+    padding-top: 80px !important;
   }
 }
 
-
+/* === MAIN CONTAINER === */
 main.legal-container {
   flex: 1;
   padding: 40px;
@@ -56,6 +75,7 @@ main.legal-container {
   line-height: 1.6;
 }
 
+/* === TITRE === */
 .title {
   font-size: 32px;
   font-weight: 500;
@@ -63,6 +83,8 @@ main.legal-container {
   margin-bottom: 20px;
   color: #C2A878;
 }
+
+/* === LISTE DU GUIDE === */
 .guide-list {
   list-style: none;
   padding: 0;
@@ -79,11 +101,10 @@ main.legal-container {
   content: "•";
   position: absolute;
   left: 0;
-  color: #C2A878; /* ton doré */
+  color: #C2A878;
   font-size: 20px;
   line-height: 1;
 }
-
 
 /* === FOOTER === */
 .footer {
@@ -129,7 +150,7 @@ main.legal-container {
   filter: invert(100%);
 }
 
-/* === RESPONSIVE === */
+/* === RESPONSIVE GLOBAL === */
 @media (max-width: 768px) {
   main.legal-container {
     padding: 20px;
@@ -151,3 +172,4 @@ main.legal-container {
     font-size: 22px;
   }
 }
+

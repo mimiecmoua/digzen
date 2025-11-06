@@ -9,17 +9,19 @@
 }
 
 html, body {
-  height: 100%; /* pour coller le footer en bas */
+  height: 100%;
 }
 
-/* Body spécifique pour pages légales */
+/* === STRUCTURE === */
 body.legal-page {
-  display: block; /* pas de flex */
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background-color: rgb(18, 17, 17);
-  padding-top: 20px; /* espace en haut pour le titre */
-  padding-bottom: 20px;
+  color: #C2A878;
 }
+
+/* === LANGUAGE SWITCHER === */
 .language-switcher {
   position: fixed;
   top: 1rem;
@@ -27,6 +29,9 @@ body.legal-page {
   display: flex;
   gap: 8px;
   z-index: 1000;
+  background: rgba(0,0,0,0.25);
+  padding: 6px 8px;
+  border-radius: 8px;
 }
 
 .flag {
@@ -40,26 +45,39 @@ body.legal-page {
   transform: scale(1.1);
 }
 
+/* === RESPONSIVE FLAGS + ESPACE ANTI-CHEVAUCHEMENT === */
 @media (max-width: 600px) {
+
+  .language-switcher {
+    top: 0.5rem;
+    left: 0.5rem;
+    gap: 5px;
+    padding: 4px 6px;
+  }
+
   .flag {
-    width: 24px;
-    height: 16px;
+    width: 22px;
+    height: 14px;
+  }
+
+  /* ✅ Empêche les drapeaux de recouvrir le contenu */
+  .legal-container {
+    padding-top: 80px !important;
   }
 }
 
-/* style-legal.css */
+/* === MAIN CONTENT === */
 .legal-container {
-  font-family: 'Poppins', sans-serif;
+  flex: 1;
   padding: 40px;
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
-  color: #C2A878; /* fallback si gradient non supporté */
+  color: #C2A878;
 }
 
 /* === FOOTER === */
 .footer {
-  margin-top: auto;
   width: 100%;
   background-color: rgb(18, 17, 17);
   color: rgb(255, 182, 193);
@@ -102,13 +120,14 @@ body.legal-page {
   filter: invert(100%);
 }
 
-
+/* === RESPONSIVE GLOBAL === */
 @media (max-width: 768px) {
   .legal-container {
-    padding: 15px;
+    padding: 20px;
     font-size: 16px;
   }
 }
+
 @media (max-width: 480px) {
   .legal-container {
     padding: 10px;
