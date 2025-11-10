@@ -35,9 +35,9 @@ const magicWords = {
 
 // --- Textes traduits dans la page (footer + "Créé par WebOara") ---
 const translations = {
-  fr: { createdBy: "Créé par", mentions: "Mentions légales", privacy: "Politique de confidentialité (RGPD)", terms: "Conditions d’utilisation", guide: "Guide d'utilisation" },
-  en: { createdBy: "Created by", mentions: "Legal notices", privacy: "Privacy policy (GDPR)", terms: "Terms of use", guide: "User guide" },
-  de: { createdBy: "Erstellt von", mentions: "Rechtliche Hinweise", privacy: "Datenschutzrichtlinie (DSGVO)", terms: "Nutzungsbedingungen", guide: "Benutzerhandbuch" }
+  fr: { createdBy: "Créé par", mentions: "Mentions légales", privacy: "Politique de confidentialité (RGPD)", terms: "Conditions d’utilisation", guide: "Guide d'utilisation", contact: "Contact" },
+  en: { createdBy: "Created by", mentions: "Legal notices", privacy: "Privacy policy (GDPR)", terms: "Terms of use", guide: "User guide",contact: "Contact" },
+  de: { createdBy: "Erstellt von", mentions: "Rechtliche Hinweise", privacy: "Datenschutzrichtlinie (DSGVO)", terms: "Nutzungsbedingungen", guide: "Benutzerhandbuch", contact: "Kontakt" }
 };
 
 // --- Langue actuelle ---
