@@ -9,7 +9,7 @@
 }
 
 html, body {
-  height: 100%; /* pour coller le footer en bas */
+  height: 100%; 
 }
 
 body {
@@ -20,6 +20,7 @@ body {
   min-height: 100vh;
   background-color: rgb(18, 17, 17);
 }
+
 .language-switcher {
   position: fixed;
   top: 1rem;
@@ -46,32 +47,40 @@ body {
     height: 16px;
   }
 }
+
 /* === STRUCTURE PRINCIPALE === */
 .container {
-  flex: 1; /* pousse le footer vers le bas */
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+
 /* === TITRE === */
 .title {
-  font-family: 'Poppins', sans-serif;
   font-size: 36px;
   color: rgb(254, 253, 253);
   text-align: center;
   margin-bottom: 20px;
 }
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
 /* === CHRONOMÈTRE === */
 .chronometre {
   background-color: rgb(232, 230, 230);
   padding: 15px;
-  border-radius: 0px;
   width: 400px;
   max-width: 90vw;
   text-align: center;
   box-shadow: 0 0 10px rgba(0,0,0,0.25);
 }
+
 .tim {
   margin: auto;
   width: 100%;
@@ -83,15 +92,23 @@ body {
   font-weight: 400;
   margin-bottom: 10px;
 }
+
 .tim span {
-  font-family: 'Poppins', sans-serif;
   padding: 5px;
 }
+
+@media (max-width: 600px) {
+  .tim {
+    font-size: 28px;
+  }
+}
+
 .controls {
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
+
 button {
   background-color: rgb(18, 17, 17);
   color: rgb(255, 182, 193);
@@ -104,15 +121,64 @@ button {
   transition: 0.3s;
   cursor: pointer;
 }
+
 button:hover {
   transform: scale(0.95);
 }
+
 .instructions {
   color: rgb(46,45,45);
   font-weight: 500;
   margin-top: 10px;
-  min-height: 24px; /* espace réservé même quand vide */
+  min-height: 24px;
 }
+
+/* === ZONE MAGIQUE === */
+.mot-magique {
+  position: relative;
+  margin: 60px 0;
+  text-align: center;
+  width: 100%;
+  font-size: 24px;
+  color: #C2A878; 
+  letter-spacing: 1px;
+  opacity: 0;
+  animation: floatFade 5s ease-in-out infinite;
+  background: linear-gradient(90deg, #C2A878, #E9E3D9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes floatFade {
+  0% { opacity: 0; transform: translateY(15px); }
+  10% { opacity: 1; transform: translateY(0px); }
+  90% { opacity: 1; transform: translateY(0px); }
+  100% { opacity: 0; transform: translateY(-15px); }
+}
+
+/* === ANIMATION FIN DE CHRONO === */
+#end-animation {
+  display: none;
+  position: fixed;      /* ou absolute selon ce que tu veux */
+  top: 50%;             /* centre vertical */
+  left: 50%;            /* centre horizontal */
+  transform: translate(-50%, -50%);
+  z-index: 999;         /* au-dessus de tout */
+  text-align: center;
+}
+
+#celebration-gif {
+  width: 100%;       /* prend toute la largeur du conteneur */
+  max-width: 500px;  /* limite pour desktop */
+  height: auto;      /* garde les proportions */
+  animation: pop 0.4s ease-out forwards;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 /* === FOOTER === */
 .footer {
   margin-top: auto;
@@ -127,39 +193,39 @@ button:hover {
   align-items: center;
   gap: 10px;
 }
+
 .footer a {
   color: rgb(255, 182, 193);
   text-decoration: none;
   transition: 0.3s;
 }
+
 .footer a:hover {
   color: white;
   text-decoration: underline;
 }
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
+
 .social-links img {
   width: 22px;
   height: 22px;
   filter: invert(80%) sepia(25%) saturate(250%) hue-rotate(20deg);
   transition: 0.3s;
 }
+
 .social-links img:hover {
   transform: scale(1.2);
   filter: invert(100%);
 }
+
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
-  .title {
-    font-size: 28px;
-  }
-  .tim {
-    font-size: 28px;
-  }
   .footer {
     font-size: 13px;
   }
@@ -167,43 +233,10 @@ button:hover {
     flex-direction: column;
     gap: 5px;
   }
-}
-/* --- Effet moderne des mots magiques --- */
-.mot-magique {
-  position: relative;
-  margin: 60px 0;
-  text-align: center;
-  width: 100%;
-  font-size: 24px;
-  color: #C2A878; /* doré doux Japandi */
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 1px;
-  opacity: 0;
-  animation: floatFade 5s ease-in-out infinite;
-}
-/* Animation fluide : monte, devient visible, disparaît doucement */
-@keyframes floatFade {
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  10% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  90% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-15px);
+  #celebration-gif {
+    width: 150px; /* plus petit GIF sur mobile */
   }
 }
-.mot-magique {
-  background: linear-gradient(90deg, #C2A878, #E9E3D9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+
 
 

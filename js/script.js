@@ -1,5 +1,5 @@
 // ==============================
-// DigZen – Chrono + Mots magiques + Traductions
+// DigZen – Chrono + Mots magiques + Traductions + Animation fin
 // ==============================
 
 // --- Mots magiques ---
@@ -10,7 +10,7 @@ const magicWords = {
     "Pose ta fourchette ✋",
     "Savoure chaque bouchée 😌",
     "Écoute ton corps 💫",
-    "Bois un peu d’eau 💧",
+    "Prends une toute petite gorgée d’eau 💧",
     "Sois dans l’instant présent 🕊️"
   ],
   en: [
@@ -19,7 +19,7 @@ const magicWords = {
     "Put down your fork ✋",
     "Savor each bite 😌",
     "Listen to your body 💫",
-    "Drink some water 💧",
+    "Take a tiny sip of water 💧",
     "Be in the present moment 🕊️"
   ],
   de: [
@@ -28,34 +28,16 @@ const magicWords = {
     "Leg deine Gabel ab ✋",
     "Genieße jeden Bissen 😌",
     "Hör auf deinen Körper 💫",
-    "Trink etwas Wasser 💧",
+    "Nimm einen winzigen Schluck Wasser 💧",
     "Bleibe im jetzigen Moment 🕊️"
   ]
 };
 
 // --- Textes traduits dans la page (footer + "Créé par WebOara") ---
 const translations = {
-  fr: {
-    createdBy: "Créé par",
-    mentions: "Mentions légales",
-    privacy: "Politique de confidentialité (RGPD)",
-    terms: "Conditions d’utilisation",
-    guide: "Guide d'utilisation"
-  },
-  en: {
-    createdBy: "Created by",
-    mentions: "Legal notices",
-    privacy: "Privacy policy (GDPR)",
-    terms: "Terms of use",
-    guide: "User guide"
-  },
-  de: {
-    createdBy: "Erstellt von",
-    mentions: "Rechtliche Hinweise",
-    privacy: "Datenschutzrichtlinie (DSGVO)",
-    terms: "Nutzungsbedingungen",
-    guide: "Benutzerhandbuch"
-  }
+  fr: { createdBy: "Créé par", mentions: "Mentions légales", privacy: "Politique de confidentialité (RGPD)", terms: "Conditions d’utilisation", guide: "Guide d'utilisation" },
+  en: { createdBy: "Created by", mentions: "Legal notices", privacy: "Privacy policy (GDPR)", terms: "Terms of use", guide: "User guide" },
+  de: { createdBy: "Erstellt von", mentions: "Rechtliche Hinweise", privacy: "Datenschutzrichtlinie (DSGVO)", terms: "Nutzungsbedingungen", guide: "Benutzerhandbuch" }
 };
 
 // --- Langue actuelle ---
@@ -90,13 +72,19 @@ function chrono() {
 
   if (elapsed >= 20 * 60 * 1000) { // 20 minutes
     stop();
+
+    // Affiche le message final
     const motDiv = document.getElementById("mot-magique");
     if (motDiv) motDiv.textContent = "✅ 20 minutes écoulées — prends un moment.";
+
     stopMotsMagiques(true);
+
+    // Affiche le GIF
+    afficherAnimationFin();
   }
 }
 
-// ===== Fonctions boutons (toujours en anglais) =====
+// ===== Fonctions boutons =====
 function start() {
   if (timer) return;
   startTime = Date.now() - elapsed;
@@ -120,6 +108,10 @@ function reset() {
   afficherTemps(elapsed);
   const motDiv = document.getElementById("mot-magique");
   if (motDiv) motDiv.textContent = "";
+
+  // Masque le GIF à chaque reset
+  const animationDiv = document.getElementById("end-animation");
+  if (animationDiv) animationDiv.style.display = "none";
 }
 
 // ===== Mots magiques =====
@@ -165,7 +157,7 @@ function stopMotsMagiques(forceClear = false) {
   }
 }
 
-// ===== Traduction de la page (footer + créé par WebOara) =====
+// ===== Traduction de la page =====
 function translatePage(lang) {
   currentLang = lang;
   localStorage.setItem("lang", lang);
@@ -215,6 +207,15 @@ async function keepScreenOn() {
     console.error(`${err.name}, ${err.message}`);
   }
 }
+
+// ===== AFFICHAGE GIF FIN =====
+function afficherAnimationFin() {
+    const animationDiv = document.getElementById("end-animation");
+    if (animationDiv) {
+        animationDiv.style.display = "block"; // rend le GIF visible
+    }
+}
+
 
 
 
