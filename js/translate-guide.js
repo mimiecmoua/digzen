@@ -41,26 +41,7 @@ const translations = {
         "footer-guide": "User Guide",
         "footer-home": "Home"
     },
-    de: {
-        "title-guide": "Benutzerhandbuch",
-        "p-note": "<strong>Hinweis:</strong> Der 20-Minuten-Timer basiert auf der durchschnittlichen Sättigungszeit für Personen ohne hormonelle Störungen oder besondere Bedingungen. Die Zeiten können individuell variieren.",
-        "li-1": "Setzen Sie sich bequem vor Ihre Mahlzeit.",
-        "li-2": "Starten Sie den Timer, sobald Sie es sich bequem gemacht haben.",
-        "li-3": "Halten Sie etwas Wasser bereit, um kleine Schlucke während des Essens zu nehmen.",
-        "li-4": "Der Timer läuft 20 Minuten und hilft Ihnen, Ihr Tempo zu kontrollieren, damit Sie nicht zu schnell essen.",
-        "li-5": "Achten Sie mehr auf Ihre Sättigung als auf Ihren Hunger.",
-        "li-6": "Werfen Sie von Zeit zu Zeit einen Blick auf den Bildschirm: Nachrichten erscheinen, um Sie daran zu erinnern, langsamer zu essen.",
-        "li-7": "Legen Sie Ihre Gabel nach jedem Bissen ab oder das Essen, wenn Sie mit den Händen essen.",
-        "li-8": "Je langsamer Sie essen, desto schneller stellt sich Sättigung ein.",
-        "li-9": "Platzieren Sie den Bildschirm in einem angenehmen Abstand, um den Timer mühelos zu überwachen.",
-        // FOOTER
-        "footer-copyright": "© 2025 DigZen — Erstellt von WebOara",
-        "footer-legal": "Rechtliche Hinweise",
-        "footer-privacy": "Datenschutzrichtlinie (DSGVO)",
-        "footer-conditions": "Nutzungsbedingungen",
-        "footer-guide": "Benutzerhandbuch",
-        "footer-home": "Startseite"
-    }
+   
 };
 
 // Fonction pour changer la langue

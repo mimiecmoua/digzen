@@ -47,27 +47,7 @@ const translations = {
     "footer-home": "Home"
   },
 
-  de: {
-    "legal-title": "Datenschutzrichtlinie",
-    "policy-intro": "Diese Richtlinie erklärt, wie die Web-App DigZen personenbezogene Daten ihrer Nutzer sammelt, verwendet und schützt.",
-    "h2-collected": "Gesammelte Daten",
-    "collected-text": "Diese Web-App sammelt keine personenbezogenen Daten.",
-    "h2-use": "Verwendung der Daten",
-    "use-text": "Wenn Daten gesammelt würden, würden sie nur zur Verbesserung der Benutzererfahrung verwendet und niemals ohne Zustimmung an Dritte weitergegeben.",
-    "h2-security": "Datensicherheit",
-    "security-text": "Alle notwendigen Maßnahmen sind ergriffen, um Ihre Daten vor unbefugtem Zugriff, Änderung oder Löschung zu schützen.",
-    "h2-cookies": "Cookies",
-    "cookies-text": "Diese Web-App verwendet keine Cookies.",
-    "h2-contact": "Kontakt",
-    "contact-text": "Bei Fragen zur Datenschutzrichtlinie: E-Mail: weboaraa@gmail.com",
-
-    // FOOTER
-    "footer-legal": "Impressum",
-    "footer-privacy": "Datenschutzrichtlinie",
-    "footer-tos": "Nutzungsbedingungen",
-    "footer-guide": "Benutzerhandbuch",
-    "footer-home": "Startseite"
-  }
+ 
 };
 
 // ===============================

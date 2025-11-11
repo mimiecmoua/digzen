@@ -69,40 +69,7 @@ const translations = {
         "footer-guide": "User Guide",
         "footer-home": "Home"
     },
-    de: {
-        // TITRE
-        "title-conditions": "Nutzungsbedingungen",
-
-        // SECTIONS
-        "h2-objet": "1. Zweck",
-        "p-objet": "Diese Bedingungen definieren die Regeln für die Nutzung der DigZen-Webanwendung. Durch den Zugriff und die Nutzung dieser Anwendung akzeptieren Sie diese Bedingungen vollständig.",
-
-        "h2-acces": "2. Zugriff auf die Anwendung",
-        "p-acces": "DigZen ist direkt über einen Webbrowser zugänglich, ohne Download oder obligatorische Registrierung. Der Herausgeber behält sich das Recht vor, den Zugriff jederzeit zu ändern, auszusetzen oder zu beenden.",
-
-        "h2-utilisation": "3. Nutzung der Anwendung",
-        "p-utilisation": "Der Nutzer verpflichtet sich, DigZen verantwortungsbewusst und gesetzeskonform zu nutzen. Jede missbräuchliche, schädliche oder betrügerische Nutzung ist verboten.",
-
-        "h2-propriete": "4. Geistiges Eigentum",
-        "p-propriete": "Alle Inhalte von DigZen, einschließlich Texte, Bilder, Animationen und Quellcode, sind urheberrechtlich geschützt. Jede Reproduktion oder Nutzung ohne Genehmigung ist untersagt.",
-
-        "h2-responsabilite": "5. Haftung",
-        "p-responsabilite": "Der Nutzer verwendet die Anwendung auf eigenes Risiko. Der Herausgeber kann nicht für direkte oder indirekte Schäden im Zusammenhang mit der Nutzung von DigZen haftbar gemacht werden.",
-
-        "h2-donnees": "6. Persönliche Daten",
-        "p-donnees": "Es werden keine personenbezogenen Daten von DigZen erhoben. Für jede zukünftige Erhebung wird die ausdrückliche Zustimmung gemäß DSGVO eingeholt.",
-
-        "h2-modification": "7. Änderungen der Bedingungen",
-        "p-modification": "Der Herausgeber behält sich das Recht vor, diese Bedingungen jederzeit zu ändern. Änderungen treten mit der Veröffentlichung auf dieser Seite in Kraft.",
-
-        // FOOTER
-        "footer-copyright": "© 2025 DigZen — Erstellt von WebOara",
-        "footer-legal": "Rechtliche Hinweise",
-        "footer-privacy": "Datenschutzrichtlinie (DSGVO)",
-        "footer-conditions": "Nutzungsbedingungen",
-        "footer-guide": "Benutzerhandbuch",
-        "footer-home": "Startseite"
-    }
+    
 };
 
 // Fonction pour changer la langue

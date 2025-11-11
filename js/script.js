@@ -21,16 +21,8 @@ const magicWords = {
     "Listen to your body 💫",
     "Take a tiny sip of water 💧",
     "Be in the present moment 🕊️"
-  ],
-  de: [
-    "Kaue langsam 🍴",
-    "Atme tief ein 🌿",
-    "Leg deine Gabel ab ✋",
-    "Genieße jeden Bissen 😌",
-    "Hör auf deinen Körper 💫",
-    "Nimm einen winzigen Schluck Wasser 💧",
-    "Bleibe im jetzigen Moment 🕊️"
   ]
+
 };
 
 // --- Textes traduits dans la page (footer + "Créé par WebOara") ---

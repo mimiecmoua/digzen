@@ -81,43 +81,7 @@ const translations = {
     "footer-home": "Home"
   },
 
-  de: {
-    "legal-title": "Impressum",
-    "title-legal": "Impressum - DigZen",
-
-    "h2-editor": "Herausgeber",
-    "editor-name": "Firmenname: WebOara",
-    "editor-address": "Adresse: 11 rue de l'Église, 34440 Colombiers, Frankreich",
-    "editor-email": "E-Mail: weboaraa@gmail.com",
-    "editor-phone": "Telefonnummer: +33 6 58 05 35 86",
-
-    "h2-director": "Leitung der Veröffentlichung",
-    "director-name": "Name: Émilie Clain",
-
-    "h2-hosting": "Hosting-Anbieter",
-    "host-name": "Name: GitHub, Inc.",
-    "host-address":
-      "Adresse: 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA",
-    "host-contact": "Kontakt: support@github.com",
-
-    "h2-ip": "Geistiges Eigentum",
-    "ip-text":
-      "Alle Inhalte dieser Web-App, einschließlich Texte, Bilder und Quellcode, sind urheberrechtlich geschützt. Jede Reproduktion oder Nutzung ohne Genehmigung ist verboten.",
-
-    "h2-privacy": "Personenbezogene Daten",
-    "privacy-text": "Diese Web-App sammelt keine personenbezogenen Daten.",
-
-    "h2-liability": "Haftungsbeschränkung",
-    "liability-text":
-      "Die Nutzung dieser Web-App erfolgt auf eigenes Risiko des Benutzers. Der Herausgeber kann nicht für Konsequenzen der Nutzung verantwortlich gemacht werden.",
-
-    // FOOTER
-    "footer-legal": "Impressum",
-    "footer-privacy": "Datenschutzrichtlinie (DSGVO)",
-    "footer-tos": "Nutzungsbedingungen",
-    "footer-guide": "Benutzerhandbuch",
-    "footer-home": "Startseite"
-  }
+  
 };
 
 // ===============================
