@@ -1,48 +1,27 @@
 // ==============================
-// DigZen – Chrono + Mots magiques + Traductions + Animation fin
+// DigZen – Chrono stable + Mots magiques + Animation fin (FR)
 // ==============================
 
 // --- Mots magiques ---
-const magicWords = {
-  fr: [
-    "Mâche lentement 🍴",
-    "Respire profondément 🌿",
-    "Pose ta fourchette ✋",
-    "Savoure chaque bouchée 😌",
-    "Écoute ton corps 💫",
-    "Prends une toute petite gorgée d’eau 💧",
-    "Sois dans l’instant présent 🕊️"
-  ],
-  en: [
-    "Chew slowly 🍴",
-    "Breathe deeply 🌿",
-    "Put down your fork ✋",
-    "Savor each bite 😌",
-    "Listen to your body 💫",
-    "Take a tiny sip of water 💧",
-    "Be in the present moment 🕊️"
-  ]
-
-};
-
-// --- Textes traduits dans la page (footer + "Créé par WebOara") ---
-const translations = {
-  fr: { createdBy: "Créé par", mentions: "Mentions légales", privacy: "Politique de confidentialité (RGPD)", terms: "Conditions d’utilisation", guide: "Guide d'utilisation", contact: "Contact" },
-  en: { createdBy: "Created by", mentions: "Legal notices", privacy: "Privacy policy (GDPR)", terms: "Terms of use", guide: "User guide",contact: "Contact" },
-  de: { createdBy: "Erstellt von", mentions: "Rechtliche Hinweise", privacy: "Datenschutzrichtlinie (DSGVO)", terms: "Nutzungsbedingungen", guide: "Benutzerhandbuch", contact: "Kontakt" }
-};
-
-// --- Langue actuelle ---
-let currentLang = localStorage.getItem("lang") || "fr";
+const magicWords = [
+  "Mâche lentement 🍴",
+  "Respire profondément 🌿",
+  "Pose ta fourchette ✋",
+  "Savoure chaque bouchée 😌",
+  "Écoute ton corps 💫",
+  "Prends une toute petite gorgée d’eau 💧",
+  "Sois dans l’instant présent 🕊️"
+];
 
 // ===== Chrono =====
 let startTime = null;
-let timer = null;
+let chronoInterval = null;
 let elapsed = 0;
+const chronoUpdateInterval = 500; // ms
 
 // ===== Mots magiques =====
-let indexMot = 0;
-let intervalMots = null;
+let motInterval = null;
+let motIndex = 0;
 
 // --- Affichage du chrono ---
 function afficherTemps(ms) {
@@ -52,8 +31,7 @@ function afficherTemps(ms) {
   const heures = Math.floor(totalSeconds / 3600);
 
   const tim = document.querySelector(".tim");
-  if (!tim) return;
-  tim.innerHTML = `<span>${heures} h</span>:<span>${minutes} min</span>:<span>${secondes} s</span>`;
+  if (tim) tim.innerHTML = `<span>${heures} h</span>:<span>${minutes} min</span>:<span>${secondes} s</span>`;
 }
 
 // --- Chrono en cours ---
@@ -63,85 +41,71 @@ function chrono() {
   afficherTemps(elapsed);
 
   if (elapsed >= 20 * 60 * 1000) { // 20 minutes
-    stop();
-
-    // Affiche le message final
+    stopChrono();
+    stopMotsMagiques(true);
+    afficherAnimationFin();
     const motDiv = document.getElementById("mot-magique");
     if (motDiv) motDiv.textContent = "✅ 20 minutes écoulées — prends un moment.";
-
-    stopMotsMagiques(true);
-
-    // Affiche le GIF
-    afficherAnimationFin();
   }
 }
 
 // ===== Fonctions boutons =====
-function start() {
-  if (timer) return;
+function startChrono() {
+  if (chronoInterval) return;
   startTime = Date.now() - elapsed;
-  timer = setInterval(chrono, 100);
-  lancerMotsMagiques();
+  chronoInterval = setInterval(chrono, chronoUpdateInterval);
+  startMotsMagiques();
   const btn = document.getElementById('start');
   if (btn) btn.disabled = true;
 }
 
-function stop() {
-  clearInterval(timer);
-  timer = null;
+function stopChrono() {
+  clearInterval(chronoInterval);
+  chronoInterval = null;
   stopMotsMagiques();
   const btn = document.getElementById('start');
   if (btn) btn.disabled = false;
 }
 
-function reset() {
-  stop();
+function resetChrono() {
+  stopChrono();
   elapsed = 0;
   afficherTemps(elapsed);
   const motDiv = document.getElementById("mot-magique");
   if (motDiv) motDiv.textContent = "";
-
-  // Masque le GIF à chaque reset
   const animationDiv = document.getElementById("end-animation");
   if (animationDiv) animationDiv.style.display = "none";
 }
 
 // ===== Mots magiques =====
-function afficherMotAvecEffet(txt) {
+function afficherMot(txt) {
   const motDiv = document.getElementById("mot-magique");
   if (!motDiv) return;
 
   motDiv.textContent = txt;
   motDiv.classList.remove("showMagic");
-  void motDiv.offsetWidth;
+  void motDiv.offsetWidth; // relance l'animation CSS
   motDiv.classList.add("showMagic");
 }
 
-function lancerMotsMagiques() {
-  const motDiv = document.getElementById("mot-magique");
-  if (!motDiv) return;
+function startMotsMagiques() {
+  stopMotsMagiques(); // sécurité
 
-  if (intervalMots) clearInterval(intervalMots);
+  afficherMot(magicWords[motIndex]);
+  motIndex = (motIndex + 1) % magicWords.length;
 
-  const list = magicWords[currentLang];
-  afficherMotAvecEffet(list[indexMot]);
-  indexMot = (indexMot + 1) % list.length;
+  motInterval = setInterval(() => {
+    afficherMot(magicWords[motIndex]);
+    motIndex = (motIndex + 1) % magicWords.length;
 
-  intervalMots = setInterval(() => {
-    if (elapsed >= 20 * 60 * 1000) {
-      clearInterval(intervalMots);
-      intervalMots = null;
-      return;
-    }
-    afficherMotAvecEffet(list[indexMot]);
-    indexMot = (indexMot + 1) % list.length;
+    if (elapsed >= 20 * 60 * 1000) stopMotsMagiques(true);
   }, 5000);
 }
 
 function stopMotsMagiques(forceClear = false) {
-  if (intervalMots) {
-    clearInterval(intervalMots);
-    intervalMots = null;
+  if (motInterval) {
+    clearInterval(motInterval);
+    motInterval = null;
   }
   if (forceClear) {
     const motDiv = document.getElementById("mot-magique");
@@ -149,49 +113,22 @@ function stopMotsMagiques(forceClear = false) {
   }
 }
 
-// ===== Traduction de la page =====
-function translatePage(lang) {
-  currentLang = lang;
-  localStorage.setItem("lang", lang);
-  document.documentElement.lang = lang;
-
-  document.querySelectorAll("[data-translate]").forEach(el => {
-    const key = el.getAttribute("data-translate");
-    if (translations[lang][key]) el.textContent = translations[lang][key];
-  });
-
-  // Redémarre les mots magiques dans la langue active
-  indexMot = 0;
-  if (timer) lancerMotsMagiques();
-}
-
-// ===== Gestion drapeaux =====
-document.getElementById("lang-fr")?.addEventListener("click", () => translatePage("fr"));
-document.getElementById("lang-en")?.addEventListener("click", () => translatePage("en"));
-document.getElementById("lang-de")?.addEventListener("click", () => translatePage("de"));
-
 // ===== Initialisation =====
 document.addEventListener("DOMContentLoaded", () => {
   afficherTemps(0);
 
-  const btnStart = document.getElementById("start");
-  const btnStop = document.getElementById("stop");
-  const btnReset = document.getElementById("reset");
-
-  if (btnStart) btnStart.addEventListener("click", () => { keepScreenOn(); start(); });
-  if (btnStop) btnStop.addEventListener("click", stop);
-  if (btnReset) btnReset.addEventListener("click", reset);
-
-  translatePage(currentLang);
+  document.getElementById("start")?.addEventListener("click", () => { keepScreenOn(); startChrono(); });
+  document.getElementById("stop")?.addEventListener("click", stopChrono);
+  document.getElementById("reset")?.addEventListener("click", resetChrono);
 });
 
-// ===== Empêche mise en veille =====
+// ===== Wake Lock =====
 let wakeLock = null;
 async function keepScreenOn() {
   try {
-    wakeLock = await navigator.wakeLock.request("screen");
+    if (!wakeLock) wakeLock = await navigator.wakeLock.request("screen");
     document.addEventListener("visibilitychange", async () => {
-      if (wakeLock !== null && document.visibilityState === "visible") {
+      if (!wakeLock && document.visibilityState === "visible") {
         wakeLock = await navigator.wakeLock.request("screen");
       }
     });
@@ -200,13 +137,13 @@ async function keepScreenOn() {
   }
 }
 
-// ===== AFFICHAGE GIF FIN =====
+// ===== Animation fin =====
 function afficherAnimationFin() {
-    const animationDiv = document.getElementById("end-animation");
-    if (animationDiv) {
-        animationDiv.style.display = "block"; // rend le GIF visible
-    }
+  const animationDiv = document.getElementById("end-animation");
+  if (animationDiv) animationDiv.style.display = "block";
 }
+
+
 
 
 
