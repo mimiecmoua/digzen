@@ -7,58 +7,73 @@
     <title>DigZen</title>
     <link rel="icon" sizes="32x32" href="img/lheure-du-repas.png" type="image/png">
     <link rel="stylesheet" href="style.css">
-    <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7GWY3511SN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-7GWY3511SN');
-  </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7GWY3511SN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}        
+        gtag('js', new Date());
+        gtag('config', 'G-7GWY3511SN');
+    </script>
 </head>
 <body>
-    <div class="container"> <!-- nouveau container pour centrer verticalement -->
-        <div class="title">DigZen</div> <!-- titre au-dessus -->
-    <div class="chronometre">
-        <div class="tim">
-            <span>0 h</span>:
-            <span>0 min</span>:
-            <span>0 s</span>:
-            <span>0 ms</span>
+    <div class="container">
+        <div class="title">DigZen</div>
+
+        <div class="chronometre">
+            <div class="tim">
+                <span>0 h</span>:
+                <span>0 min</span>:
+                <span>0 s</span>:
+                <span>0 ms</span>
+            </div>
+
+            <div class="controls">
+                <button id="start" translate="no">Start</button>
+                <button id="stop" translate="no">Stop</button>
+                <button id="reset" translate="no">Reset</button>
+            </div>
+
+            <div class="instructions" style="margin-top:15px; font-size:18px; min-height:24px;"></div>
         </div>
-        <div class="controls">
-            <button id="start" translate="no">Start</button>
-            <button id="stop" translate="no">Stop</button>
-            <button id="reset" translate="no">Reset</button>
+
+        <!-- Effet carrousel moderne pour les phrases -->
+        <div id="phrase-carousel" class="carousel">
+            <!-- Les phrases seront injectées par JS -->
         </div>
-        <div class="instructions" style="margin-top:15px; font-size:18px; min-height:24px;"></div>
+
+        <!-- Zone magique 
+        <div id="mot-magique" class="mot-magique"></div>-->
+
+        <!-- Animation fin de chrono -->
+        <div id="end-animation">
+            <img id="celebration-gif" src="img/DigZen_anim.gif" alt="Célébration" width="500" height="auto">
+        </div>
+
+        <footer class="footer">
+            <p>© 2025 <strong>DigZen</strong> — Créé par
+                <a href="https://mimiecmoua.github.io/portfolio/" target="_blank" rel="noopener noreferrer">WebOara</a>
+            </p>
+
+            <div class="footer-links">
+                <a href="/mentions-legales.html">Mentions légales</a>
+                <a href="/politique-confidentialite.html">Politique de confidentialité (RGPD)</a>
+                <a href="/conditions-utilisation.html">Conditions d’utilisation</a>
+                <a href="/guide-utilisation.html">Guide d'utilisation</a>
+                <a href="mailto:weboaraa@gmail.com">Contact</a>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/emilieclain" target="_blank" rel="noopener noreferrer">
+                    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" />
+                </a>
+            </div>
+        </footer>
     </div>
-      <!-- Zone magique -->
-    <div id="mot-magique" class="mot-magique"></div>
-    <!-- Animation fin de chrono -->
-<div id="end-animation">
-      <img id="celebration-gif" src="img/DigZen_anim.gif" alt="Célébration" width="500" height="auto">
-</div>
-     <!--Zone footer-->
-<footer class="footer">
-  <p>© 2025 <strong>DigZen</strong> — Créé par
-    <a href="https://mimiecmoua.github.io/portfolio/" target="_blank" rel="noopener noreferrer">WebOara</a>
-  </p>
-  <div class="footer-links">
-      <a href="/mentions-legales.html">Mentions légales</a>
-      <a href="/politique-confidentialite.html">Politique de confidentialité (RGPD)</a>
-      <a href="/conditions-utilisation.html">Conditions d’utilisation</a>
-      <a href="/guide-utilisation.html">Guide d'utilisation</a>
-      <a href="mailto:weboaraa@gmail.com">Contact</a>
-    </div>
-  <div class="social-links">
-    <a href="https://www.linkedin.com/in/emilieclain" target="_blank" rel="noopener noreferrer">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" />
-    </a>
-  </div>
-</footer>
+
     <script src="js/script.js"></script>
 </body>
 </html>
+
 

@@ -1,8 +1,4 @@
-// ==============================
-// DigZen – Chrono stable + Mots magiques + Animation fin (FR)
-// ==============================
-
-// --- Mots magiques ---
+// === Phrases du carousel ===
 const magicWords = [
   "Mâche lentement 🍴",
   "Respire profondément 🌿",
@@ -13,28 +9,28 @@ const magicWords = [
   "Sois dans l’instant présent 🕊️"
 ];
 
-// ===== Chrono =====
+// === Chrono ===
 let startTime = null;
 let chronoInterval = null;
 let elapsed = 0;
-const chronoUpdateInterval = 500; // ms
+const chronoUpdateInterval = 500;
 
-// ===== Mots magiques =====
-let motInterval = null;
-let motIndex = 0;
+// === Carousel ===
+let carouselIndex = 0;
+let carouselInterval = null;
 
-// --- Affichage du chrono ---
+// === Affichage du chrono ===
 function afficherTemps(ms) {
   const totalSeconds = Math.floor(ms / 1000);
-  const secondes = totalSeconds % 60;
-  const minutes = Math.floor(totalSeconds / 60) % 60;
-  const heures = Math.floor(totalSeconds / 3600);
+  const s = totalSeconds % 60;
+  const m = Math.floor(totalSeconds / 60) % 60;
+  const h = Math.floor(totalSeconds / 3600);
 
   const tim = document.querySelector(".tim");
-  if (tim) tim.innerHTML = `<span>${heures} h</span>:<span>${minutes} min</span>:<span>${secondes} s</span>`;
+  if (tim) tim.innerHTML = `<span>${h} h</span>:<span>${m} min</span>:<span>${s} s</span>`;
 }
 
-// --- Chrono en cours ---
+// === Chrono en cours ===
 function chrono() {
   const now = Date.now();
   elapsed = now - startTime;
@@ -42,87 +38,98 @@ function chrono() {
 
   if (elapsed >= 20 * 60 * 1000) { // 20 minutes
     stopChrono();
-    stopMotsMagiques(true);
+    stopCarousel(true);
     afficherAnimationFin();
-    const motDiv = document.getElementById("mot-magique");
-    if (motDiv) motDiv.textContent = "✅ 20 minutes écoulées — prends un moment.";
   }
 }
 
-// ===== Fonctions boutons =====
+// === Boutons ===
 function startChrono() {
   if (chronoInterval) return;
+
   startTime = Date.now() - elapsed;
   chronoInterval = setInterval(chrono, chronoUpdateInterval);
-  startMotsMagiques();
-  const btn = document.getElementById('start');
-  if (btn) btn.disabled = true;
+
+  startCarousel();
+  document.getElementById('start').disabled = true;
 }
 
 function stopChrono() {
   clearInterval(chronoInterval);
   chronoInterval = null;
-  stopMotsMagiques();
-  const btn = document.getElementById('start');
-  if (btn) btn.disabled = false;
+  stopCarousel();
+  document.getElementById('start').disabled = false;
 }
 
 function resetChrono() {
   stopChrono();
   elapsed = 0;
-  afficherTemps(elapsed);
-  const motDiv = document.getElementById("mot-magique");
-  if (motDiv) motDiv.textContent = "";
-  const animationDiv = document.getElementById("end-animation");
-  if (animationDiv) animationDiv.style.display = "none";
+  afficherTemps(0);
+  stopCarousel(true);
+
+  const anim = document.getElementById("end-animation");
+  if (anim) anim.style.display = "none";
 }
 
-// ===== Mots magiques =====
-function afficherMot(txt) {
-  const motDiv = document.getElementById("mot-magique");
-  if (!motDiv) return;
+// === Carousel dynamique ===
+function afficherPhrase(phrase) {
+  const box = document.getElementById("phrase-carousel");
+  if (!box) return;
 
-  motDiv.textContent = txt;
-  motDiv.classList.remove("showMagic");
-  void motDiv.offsetWidth; // relance l'animation CSS
-  motDiv.classList.add("showMagic");
+  box.innerHTML = "";
+
+  const p = document.createElement("div");
+  p.className = "phrase-item";
+  p.textContent = phrase;
+
+  box.appendChild(p);
+
+  // relance l'animation fade-in
+  p.classList.remove("show");
+  void p.offsetWidth; // forcer reflow
+  p.classList.add("show");
 }
 
-function startMotsMagiques() {
-  stopMotsMagiques(); // sécurité
+function startCarousel() {
+  stopCarousel();
 
-  afficherMot(magicWords[motIndex]);
-  motIndex = (motIndex + 1) % magicWords.length;
+  afficherPhrase(magicWords[carouselIndex]);
+  carouselIndex = (carouselIndex + 1) % magicWords.length;
 
-  motInterval = setInterval(() => {
-    afficherMot(magicWords[motIndex]);
-    motIndex = (motIndex + 1) % magicWords.length;
+  carouselInterval = setInterval(() => {
+    afficherPhrase(magicWords[carouselIndex]);
+    carouselIndex = (carouselIndex + 1) % magicWords.length;
 
-    if (elapsed >= 20 * 60 * 1000) stopMotsMagiques(true);
+    if (elapsed >= 20 * 60 * 1000) stopCarousel(true);
   }, 5000);
 }
 
-function stopMotsMagiques(forceClear = false) {
-  if (motInterval) {
-    clearInterval(motInterval);
-    motInterval = null;
+function stopCarousel(forceClear = false) {
+  if (carouselInterval) {
+    clearInterval(carouselInterval);
+    carouselInterval = null;
   }
+
   if (forceClear) {
-    const motDiv = document.getElementById("mot-magique");
-    if (motDiv) motDiv.textContent = "";
+    const box = document.getElementById("phrase-carousel");
+    if (box) box.innerHTML = "";
   }
 }
 
-// ===== Initialisation =====
+// === Initialisation ===
 document.addEventListener("DOMContentLoaded", () => {
   afficherTemps(0);
 
-  document.getElementById("start")?.addEventListener("click", () => { keepScreenOn(); startChrono(); });
+  document.getElementById("start")?.addEventListener("click", () => {
+    keepScreenOn();
+    startChrono();
+  });
+
   document.getElementById("stop")?.addEventListener("click", stopChrono);
   document.getElementById("reset")?.addEventListener("click", resetChrono);
 });
 
-// ===== Wake Lock =====
+// === Wake Lock ===
 let wakeLock = null;
 async function keepScreenOn() {
   try {
@@ -133,15 +140,17 @@ async function keepScreenOn() {
       }
     });
   } catch (err) {
-    console.error(`${err.name}, ${err.message}`);
+    console.error(err);
   }
 }
 
-// ===== Animation fin =====
+// === Animation fin ===
 function afficherAnimationFin() {
-  const animationDiv = document.getElementById("end-animation");
-  if (animationDiv) animationDiv.style.display = "block";
+  const anim = document.getElementById("end-animation");
+  if (anim) anim.style.display = "block";
 }
+
+
 
 
 

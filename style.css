@@ -1,3 +1,5 @@
+/* CSS complet mis à jour sans la zone magique */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
 /* === RESET & BASE === */
@@ -21,6 +23,7 @@ body {
   background-color: rgb(18, 17, 17);
 }
 
+/* === SWITCH LANGUES === */
 .language-switcher {
   position: fixed;
   top: 1rem;
@@ -133,44 +136,62 @@ button:hover {
   min-height: 24px;
 }
 
-/* === ZONE MAGIQUE === */
-.mot-magique {
+/* === CARROUSEL FRASES === */
+.carousel {
   position: relative;
-  margin: 60px 0;
-  text-align: center;
-  width: 100%;
-  font-size: 24px;
-  color: #C2A878; 
-  letter-spacing: 1px;
-  opacity: 0;
-  animation: floatFade 5s ease-in-out infinite;
-  background: linear-gradient(90deg, #C2A878, #E9E3D9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  width: 90%;
+  max-width: 600px;
+  min-height: 80px;       /* hauteur minimum pour mobile */
+  padding: 10px 0;
+  overflow: hidden;
+  margin: 40px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@keyframes floatFade {
-  0% { opacity: 0; transform: translateY(15px); }
-  10% { opacity: 1; transform: translateY(0px); }
-  90% { opacity: 1; transform: translateY(0px); }
-  100% { opacity: 0; transform: translateY(-15px); }
+.phrase-item {
+  font-size: clamp(16px, 4vw, 26px); /* s’adapte dynamiquement */
+  color: #C2A878;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  word-wrap: break-word;   /* évite de couper les mots */
+  line-height: 1.4;
+  padding: 0 10px;
+}
+
+.phrase-item.show {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@media (max-width: 400px) {
+  .phrase-item {
+    font-size: 20px; /* fixe légèrement plus grande pour petits mobiles */
+  }
+  .carousel {
+    min-height: 70px;
+    margin: 30px auto;
+  }
 }
 
 /* === ANIMATION FIN DE CHRONO === */
 #end-animation {
   display: none;
-  position: fixed;      /* ou absolute selon ce que tu veux */
-  top: 50%;             /* centre vertical */
-  left: 50%;            /* centre horizontal */
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 999;         /* au-dessus de tout */
+  z-index: 999;
   text-align: center;
 }
 
 #celebration-gif {
-  width: 100%;       /* prend toute la largeur du conteneur */
-  max-width: 500px;  /* limite pour desktop */
-  height: auto;      /* garde les proportions */
+  width: 100%;
+  max-width: 500px;
+  height: auto;
   animation: pop 0.4s ease-out forwards;
 }
 
@@ -229,14 +250,25 @@ button:hover {
   .footer {
     font-size: 13px;
   }
+
   .footer-links {
     flex-direction: column;
     gap: 5px;
   }
+
   #celebration-gif {
-    width: 150px; /* plus petit GIF sur mobile */
+    width: 150px;
+  }
+
+  .carousel-item {
+    font-size: 22px;
+  }
+
+  .carousel {
+    height: 100px;
   }
 }
+
 
 
 
