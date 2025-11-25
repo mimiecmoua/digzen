@@ -1,10 +1,10 @@
 // === Phrases du carousel ===
 const magicWords = [
-  "Mâche lentement 🍴",
-  "Respire profondément 🌿",
-  "Pose ta fourchette ✋",
+  "Mâche lentement 🍽️",
+  "Respire profondément 🍃",
+  "Pose ta fourchette 🛑",
   "Savoure chaque bouchée 😌",
-  "Écoute ton corps 💫",
+  "Écoute ton corps 🧘‍♀️",
   "Prends une toute petite gorgée d’eau 💧",
   "Sois dans l’instant présent 🕊️"
 ];
@@ -101,7 +101,7 @@ function startCarousel() {
     carouselIndex = (carouselIndex + 1) % magicWords.length;
 
     if (elapsed >= 20 * 60 * 1000) stopCarousel(true);
-  }, 5000);
+  }, 10000);
 }
 
 function stopCarousel(forceClear = false) {
