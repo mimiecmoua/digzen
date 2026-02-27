@@ -17,7 +17,7 @@ const magicIcons = [
     alt: "Écoute ton corps"
   },
   {
-    src: "img/bois2.gif",
+    src: "img/bois3.gif",
     alt: "Prends une toute petite gorgée d’eau"
   },
   {
