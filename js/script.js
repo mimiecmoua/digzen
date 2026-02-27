@@ -37,6 +37,7 @@ function chrono() {
   elapsed = now - startTime;
   afficherTemps(elapsed);
 
+  // Fin du chrono après 5 secondes (test rapide)
   if (elapsed >= 5 * 1000) {
     stopChrono();
     stopCarousel(true);
@@ -73,7 +74,6 @@ function resetChrono() {
   const anim = document.getElementById("end-animation");
   if (anim) anim.style.display = "none";
 
-  // Réactiver les boutons du quiz
   const quizButtons = document.querySelectorAll(".quiz-btn");
   quizButtons.forEach(btn => {
     btn.disabled = false;
@@ -94,9 +94,7 @@ function afficherIcone(iconObj) {
   const div = document.createElement("div");
   div.className = "phrase-item";
 
-  div.innerHTML = `
-    <img src="${iconObj.src}" alt="${iconObj.alt}" class="magic-icon">
-  `;
+  div.innerHTML = `<img src="${iconObj.src}" alt="${iconObj.alt}" class="magic-icon">`;
 
   box.appendChild(div);
 
@@ -114,8 +112,6 @@ function startCarousel() {
   carouselInterval = setInterval(() => {
     afficherIcone(magicIcons[carouselIndex]);
     carouselIndex = (carouselIndex + 1) % magicIcons.length;
-
-    if (elapsed >= 20 * 60 * 1000) stopCarousel(true);
   }, 10000);
 }
 
@@ -134,11 +130,15 @@ function stopCarousel(forceClear = false) {
 // === Affichage du sondage ===
 function afficherAnimationFin() {
   const anim = document.getElementById("end-animation");
-  if (anim) anim.style.display = "flex";
+  if (anim) anim.style.display = "flex"; // Ne s’affiche que quand appelé
 }
 
 // === Initialisation ===
 document.addEventListener("DOMContentLoaded", () => {
+
+  // Assurer que le sondage est caché au départ
+  const anim = document.getElementById("end-animation");
+  if (anim) anim.style.display = "none";
 
   afficherTemps(0);
 
@@ -156,7 +156,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   quizButtons.forEach(button => {
     button.addEventListener("click", () => {
-
       const value = button.dataset.value;
 
       const data = {
@@ -174,9 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.style.opacity = "0.5";
       });
 
-      if (quizMessage) {
-        quizMessage.textContent = "✔ Réponse enregistrée";
-      }
+      if (quizMessage) quizMessage.textContent = "✔ Réponse enregistrée";
     });
   });
 
