@@ -1,12 +1,29 @@
-// === Phrases du carousel ===
-const magicWords = [
-  "Mâche lentement 🍽️",
-  "Respire profondément 🍃",
-  "Pose ta fourchette 🛑",
-  "Savoure chaque bouchée 😌",
-  "Écoute ton corps 🧘‍♀️",
-  "Prends une toute petite gorgée d’eau 💧",
-  "Sois dans l’instant présent 🕊️"
+// === Icônes du carousel ===
+const magicIcons = [
+  {
+    src: "img/Mache-lentement2.gif",
+    alt: "Mâche lentement"
+  },
+  {
+    src: "img/pose-fourchette2.gif",
+    alt: "Pose ta fourchette"
+  },
+  {
+    src: "img/savoure4.gif",
+    alt: "Savoure chaque bouchée"
+  },
+  {
+    src: "img/écoute-ton-corps3.gif",
+    alt: "Écoute ton corps"
+  },
+  {
+    src: "img/bois2.gif",
+    alt: "Prends une toute petite gorgée d’eau"
+  },
+  {
+    src: "img/moment-present2.gif",
+    alt: "Sois dans l’instant présent"
+  }
 ];
 
 // === Chrono ===
@@ -72,33 +89,38 @@ function resetChrono() {
 }
 
 // === Carousel dynamique ===
-function afficherPhrase(phrase) {
+function afficherIcone(iconObj) {
   const box = document.getElementById("phrase-carousel");
   if (!box) return;
 
   box.innerHTML = "";
 
-  const p = document.createElement("div");
-  p.className = "phrase-item";
-  p.textContent = phrase;
+  const div = document.createElement("div");
+  div.className = "phrase-item";
 
-  box.appendChild(p);
+  // SEULEMENT l'image, sans texte en bas
+  div.innerHTML = `
+    <img src="${iconObj.src}" alt="${iconObj.alt}" class="magic-icon">
+  `;
+
+  box.appendChild(div);
 
   // relance l'animation fade-in
-  p.classList.remove("show");
-  void p.offsetWidth; // forcer reflow
-  p.classList.add("show");
+  div.classList.remove("show");
+  void div.offsetWidth;
+  div.classList.add("show");
 }
+
 
 function startCarousel() {
   stopCarousel();
 
-  afficherPhrase(magicWords[carouselIndex]);
-  carouselIndex = (carouselIndex + 1) % magicWords.length;
+  afficherIcone(magicIcons[carouselIndex]);
+  carouselIndex = (carouselIndex + 1) % magicIcons.length;
 
   carouselInterval = setInterval(() => {
-    afficherPhrase(magicWords[carouselIndex]);
-    carouselIndex = (carouselIndex + 1) % magicWords.length;
+    afficherIcone(magicIcons[carouselIndex]);
+    carouselIndex = (carouselIndex + 1) % magicIcons.length;
 
     if (elapsed >= 20 * 60 * 1000) stopCarousel(true);
   }, 10000);
@@ -149,6 +171,7 @@ function afficherAnimationFin() {
   const anim = document.getElementById("end-animation");
   if (anim) anim.style.display = "block";
 }
+
 
 
 

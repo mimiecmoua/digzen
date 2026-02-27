@@ -1,5 +1,3 @@
-/* CSS complet mis à jour sans la zone magique */
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
 /* === RESET & BASE === */
@@ -14,14 +12,38 @@ html, body {
   height: 100%; 
 }
 
+/* Dans ton CSS, remplace le body ET ajoute ça : */
 body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  background-color: rgb(18, 17, 17);
+  
+  background-image: url('img/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  
+  position: relative;
+  z-index: 0;
 }
+
+/* Overlay sombre */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(18, 17, 17, 0.5);
+  z-index: 1;
+}
+
+/* TOUS LES ÉLÉMENTS AU-DESSUS (AJOUTE ÇA) */
+* {
+  position: relative;
+  z-index: 10;  /* 👈 TOUT visible */
+}
+
 
 /* === SWITCH LANGUES === */
 .language-switcher {
@@ -51,133 +73,177 @@ body {
   }
 }
 
-/* === STRUCTURE PRINCIPALE === */
+/* === CONTENU PRINCIPAL === */
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 20px;
+  gap: 25px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 /* === TITRE === */
 .title {
-  font-size: 36px;
+  font-size: clamp(28px, 6vw, 42px);
   color: rgb(254, 253, 253);
   text-align: center;
-  margin-bottom: 20px;
-}
-
-@media (max-width: 600px) {
-  .title {
-    font-size: 28px;
-  }
+  margin-bottom: 0;  /* SUPPRIMÉ order */
 }
 
 /* === CHRONOMÈTRE === */
 .chronometre {
   background-color: rgb(232, 230, 230);
-  padding: 15px;
-  width: 400px;
-  max-width: 90vw;
+  padding: 20px;
+  width: 100%;
+  max-width: 420px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  border-radius: 12px;
 }
 
 .tim {
-  margin: auto;
-  width: 100%;
-  border: 1px solid #999;
-  border-radius: 6px;
-  padding: 10px;
-  text-align: center;
-  font-size: 35px;
-  font-weight: 400;
-  margin-bottom: 10px;
+  margin: 15px 0;
+  border: 2px solid #666;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: clamp(24px, 6vw, 36px);
+  font-weight: 500;
+  color: #333;
 }
 
 .tim span {
-  padding: 5px;
-}
-
-@media (max-width: 600px) {
-  .tim {
-    font-size: 28px;
-  }
+  padding: 4px 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 4px;
+  margin: 0 2px;
 }
 
 .controls {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
 }
 
 button {
-  background-color: rgb(18, 17, 17);
+  background: linear-gradient(135deg, rgb(18,17,17), #111);
   color: rgb(255, 182, 193);
   font-size: 15px;
-  padding: 10px 20px;
-  border-radius: 1px;
-  width: 31%;
-  border: 0;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 2px solid rgb(255, 182, 193);
+  flex: 1;
+  min-width: 90px;
   letter-spacing: 1px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
   cursor: pointer;
+  font-weight: 500;
 }
 
 button:hover {
-  transform: scale(0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,182,193,0.3);
+  background: rgb(255, 182, 193);
+  color: rgb(18,17,17);
 }
 
 .instructions {
   color: rgb(46,45,45);
   font-weight: 500;
-  margin-top: 10px;
+  margin-top: 12px;
   min-height: 24px;
+  font-size: 16px;
 }
 
-/* === CARROUSEL FRASES === */
-.carousel {
-  position: relative;
-  width: 90%;
-  max-width: 600px;
-  min-height: 80px;       /* hauteur minimum pour mobile */
-  padding: 10px 0;
-  overflow: hidden;
-  margin: 40px auto;
+/* === CARROUSEL ICÔNES === */
+#phrase-carousel {
+  width: 100%;
+  max-width: 420px;
+  min-height: 160px;
+  padding: 25px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.magic-icon {
+  width: 250px;
+  height: 250px;
+  max-width: 90%;
+  display: block;
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  object-fit: contain;
 }
 
 .phrase-item {
-  font-size: clamp(16px, 4vw, 26px); /* s’adapte dynamiquement */
-  color: #C2A878;
-  text-align: center;
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  word-wrap: break-word;   /* évite de couper les mots */
-  line-height: 1.4;
-  padding: 0 10px;
+  transform: scale(0.85);
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  padding: 20px 15px;
+  text-align: center;
 }
 
 .phrase-item.show {
   opacity: 1;
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
-@media (max-width: 400px) {
-  .phrase-item {
-    font-size: 20px; /* fixe légèrement plus grande pour petits mobiles */
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+    gap: 20px;
   }
-  .carousel {
-    min-height: 70px;
-    margin: 30px auto;
+  
+  #phrase-carousel {
+    max-width: 340px;
+    min-height: 140px;
+    padding: 20px 15px;
+  }
+  
+  .magic-icon {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .chronometre {
+    padding: 18px;
   }
 }
 
-/* === ANIMATION FIN DE CHRONO === */
+@media (max-width: 480px) {
+  #phrase-carousel {
+    max-width: 300px;
+    min-height: 130px;
+    padding: 18px 12px;
+  }
+  
+  .magic-icon {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 360px) {
+  .magic-icon {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* === ANIMATION FIN === */
 #end-animation {
   display: none;
   position: fixed;
@@ -186,88 +252,91 @@ button:hover {
   transform: translate(-50%, -50%);
   z-index: 999;
   text-align: center;
+  backdrop-filter: blur(20px);
 }
 
 #celebration-gif {
   width: 100%;
-  max-width: 500px;
+  max-width: 450px;
   height: auto;
-  animation: pop 0.4s ease-out forwards;
+  border-radius: 20px;
+  animation: pop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 @keyframes pop {
-  0% { transform: scale(0.3); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% { 
+    transform: translate(-50%, -50%) scale(0.2); 
+    opacity: 0; 
+  }
+  70% { 
+    transform: translate(-50%, -50%) scale(1.1); 
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(1); 
+    opacity: 1; 
+  }
 }
 
-/* === FOOTER === */
+/* === FOOTER (EN BAS FIXE) === */
 .footer {
-  margin-top: auto;
   width: 100%;
-  background-color: rgb(18, 17, 17);
+  background: linear-gradient(180deg, rgb(18,17,17), #000);
   color: rgb(255, 182, 193);
   text-align: center;
-  padding: 20px 10px;
+  padding: 25px 20px;
   font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  border-top: 1px solid rgba(255,182,193,0.2);
+  margin-top: auto;  /* 👈 EN BAS */
 }
 
 .footer a {
   color: rgb(255, 182, 193);
   text-decoration: none;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .footer a:hover {
   color: white;
   text-decoration: underline;
+  transform: translateY(-1px);
 }
 
 .footer-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
+  margin: 10px 0;
 }
 
 .social-links img {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   filter: invert(80%) sepia(25%) saturate(250%) hue-rotate(20deg);
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  border-radius: 4px;
 }
 
 .social-links img:hover {
-  transform: scale(1.2);
-  filter: invert(100%);
+  transform: scale(1.3) translateY(-2px);
+  filter: invert(100%) brightness(1.2);
 }
 
-/* === RESPONSIVE === */
 @media (max-width: 600px) {
   .footer {
     font-size: 13px;
+    padding: 20px 15px;
   }
-
+  
   .footer-links {
     flex-direction: column;
-    gap: 5px;
-  }
-
-  #celebration-gif {
-    width: 150px;
-  }
-
-  .carousel-item {
-    font-size: 22px;
-  }
-
-  .carousel {
-    height: 100px;
+    gap: 6px;
   }
 }
+
+
+
+
 
 
 
