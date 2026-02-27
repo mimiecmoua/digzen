@@ -37,11 +37,11 @@ function chrono() {
   elapsed = now - startTime;
   afficherTemps(elapsed);
 
-  // Fin du chrono après 5 secondes (test rapide)
-  if (elapsed >= 5 * 1000) {
+  // Fin du chrono de test = 5 sec (changer à 20*60*1000 pour 20 min)
+  if (elapsed >= 20 * 60 * 1000) {
     stopChrono();
     stopCarousel(true);
-    afficherAnimationFin();
+    afficherAnimationFin(); // affiche le sondage dans le carousel
   }
 }
 
@@ -74,6 +74,7 @@ function resetChrono() {
   const anim = document.getElementById("end-animation");
   if (anim) anim.style.display = "none";
 
+  // Réactiver les boutons du quiz
   const quizButtons = document.querySelectorAll(".quiz-btn");
   quizButtons.forEach(btn => {
     btn.disabled = false;
@@ -98,6 +99,7 @@ function afficherIcone(iconObj) {
 
   box.appendChild(div);
 
+  // Animation apparition
   div.classList.remove("show");
   void div.offsetWidth;
   div.classList.add("show");
@@ -112,6 +114,9 @@ function startCarousel() {
   carouselInterval = setInterval(() => {
     afficherIcone(magicIcons[carouselIndex]);
     carouselIndex = (carouselIndex + 1) % magicIcons.length;
+
+    // fin du carousel après 20 min si nécessaire
+    if (elapsed >= 20 * 60 * 1000) stopCarousel(true);
   }, 10000);
 }
 
@@ -127,43 +132,43 @@ function stopCarousel(forceClear = false) {
   }
 }
 
-// === Affichage du sondage ===
+// === Affichage du sondage DANS LE CAROUSEL ===
 function afficherAnimationFin() {
-  const anim = document.getElementById("end-animation");
-  if (anim) anim.style.display = "flex"; // Ne s’affiche que quand appelé
-}
+  const box = document.getElementById("phrase-carousel");
+  if (!box) return;
 
-// === Initialisation ===
-document.addEventListener("DOMContentLoaded", () => {
+  box.innerHTML = `
+    <div id="quiz-container" style="
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    ">
+      <h3>🎉 As-tu moins faim ?</h3>
+      <div id="quiz-buttons">
+        <button class="quiz-btn" data-value="oui">Oui</button>
+        <button class="quiz-btn" data-value="non">Non</button>
+      </div>
+      <p id="quiz-message"></p>
+    </div>
+  `;
 
-  // Assurer que le sondage est caché au départ
-  const anim = document.getElementById("end-animation");
-  if (anim) anim.style.display = "none";
-
-  afficherTemps(0);
-
-  document.getElementById("start")?.addEventListener("click", () => {
-    keepScreenOn();
-    startChrono();
-  });
-
-  document.getElementById("stop")?.addEventListener("click", stopChrono);
-  document.getElementById("reset")?.addEventListener("click", resetChrono);
-
-  // === Mini sondage simple ===
+  // Réinitialiser événement des boutons
   const quizButtons = document.querySelectorAll(".quiz-btn");
   const quizMessage = document.getElementById("quiz-message");
 
   quizButtons.forEach(button => {
     button.addEventListener("click", () => {
       const value = button.dataset.value;
-
       const data = {
         encoreFaim: value,
         dureeRepas: elapsed,
         date: new Date().toISOString()
       };
-
       const historique = JSON.parse(localStorage.getItem("digzenStats")) || [];
       historique.push(data);
       localStorage.setItem("digzenStats", JSON.stringify(historique));
@@ -176,24 +181,33 @@ document.addEventListener("DOMContentLoaded", () => {
       if (quizMessage) quizMessage.textContent = "✔ Réponse enregistrée";
     });
   });
+}
 
+// === Initialisation ===
+document.addEventListener("DOMContentLoaded", () => {
+  afficherTemps(0);
+
+  document.getElementById("start")?.addEventListener("click", () => {
+    keepScreenOn();
+    startChrono();
+  });
+
+  document.getElementById("stop")?.addEventListener("click", stopChrono);
+  document.getElementById("reset")?.addEventListener("click", resetChrono);
 });
 
 // === Wake Lock ===
 let wakeLock = null;
-
 async function keepScreenOn() {
   try {
     if (!wakeLock && "wakeLock" in navigator) {
       wakeLock = await navigator.wakeLock.request("screen");
     }
-
     document.addEventListener("visibilitychange", async () => {
       if (!wakeLock && document.visibilityState === "visible") {
         wakeLock = await navigator.wakeLock.request("screen");
       }
     });
-
   } catch (err) {
     console.error(err);
   }
