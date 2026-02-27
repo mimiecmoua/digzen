@@ -1,29 +1,11 @@
 // === Icônes du carousel ===
 const magicIcons = [
-  {
-    src: "img/Mache-lentement2.gif",
-    alt: "Mâche lentement"
-  },
-  {
-    src: "img/pose-fourchette2.gif",
-    alt: "Pose ta fourchette"
-  },
-  {
-    src: "img/savoure4.gif",
-    alt: "Savoure chaque bouchée"
-  },
-  {
-    src: "img/écoute-ton-corps3.gif",
-    alt: "Écoute ton corps"
-  },
-  {
-    src: "img/bois3.gif",
-    alt: "Prends une toute petite gorgée d’eau"
-  },
-  {
-    src: "img/moment-present2.gif",
-    alt: "Sois dans l’instant présent"
-  }
+  { src: "img/Mache-lentement2.gif", alt: "Mâche lentement" },
+  { src: "img/pose-fourchette2.gif", alt: "Pose ta fourchette" },
+  { src: "img/savoure4.gif", alt: "Savoure chaque bouchée" },
+  { src: "img/écoute-ton-corps3.gif", alt: "Écoute ton corps" },
+  { src: "img/bois3.gif", alt: "Prends une toute petite gorgée d’eau" },
+  { src: "img/moment-present2.gif", alt: "Sois dans l’instant présent" }
 ];
 
 // === Chrono ===
@@ -44,7 +26,9 @@ function afficherTemps(ms) {
   const h = Math.floor(totalSeconds / 3600);
 
   const tim = document.querySelector(".tim");
-  if (tim) tim.innerHTML = `<span>${h} h</span>:<span>${m} min</span>:<span>${s} s</span>`;
+  if (tim) {
+    tim.innerHTML = `<span>${h} h</span>:<span>${m} min</span>:<span>${s} s</span>`;
+  }
 }
 
 // === Chrono en cours ===
@@ -53,14 +37,14 @@ function chrono() {
   elapsed = now - startTime;
   afficherTemps(elapsed);
 
-  if (elapsed >= 20 * 60 * 1000) { // 20 minutes
+  if (elapsed >= 5 * 1000) {
     stopChrono();
     stopCarousel(true);
     afficherAnimationFin();
   }
 }
 
-// === Boutons ===
+// === Démarrer chrono ===
 function startChrono() {
   if (chronoInterval) return;
 
@@ -68,16 +52,18 @@ function startChrono() {
   chronoInterval = setInterval(chrono, chronoUpdateInterval);
 
   startCarousel();
-  document.getElementById('start').disabled = true;
+  document.getElementById("start").disabled = true;
 }
 
+// === Stop chrono ===
 function stopChrono() {
   clearInterval(chronoInterval);
   chronoInterval = null;
   stopCarousel();
-  document.getElementById('start').disabled = false;
+  document.getElementById("start").disabled = false;
 }
 
+// === Reset ===
 function resetChrono() {
   stopChrono();
   elapsed = 0;
@@ -86,9 +72,19 @@ function resetChrono() {
 
   const anim = document.getElementById("end-animation");
   if (anim) anim.style.display = "none";
+
+  // Réactiver les boutons du quiz
+  const quizButtons = document.querySelectorAll(".quiz-btn");
+  quizButtons.forEach(btn => {
+    btn.disabled = false;
+    btn.style.opacity = "1";
+  });
+
+  const quizMessage = document.getElementById("quiz-message");
+  if (quizMessage) quizMessage.textContent = "";
 }
 
-// === Carousel dynamique ===
+// === Carousel ===
 function afficherIcone(iconObj) {
   const box = document.getElementById("phrase-carousel");
   if (!box) return;
@@ -98,19 +94,16 @@ function afficherIcone(iconObj) {
   const div = document.createElement("div");
   div.className = "phrase-item";
 
-  // SEULEMENT l'image, sans texte en bas
   div.innerHTML = `
     <img src="${iconObj.src}" alt="${iconObj.alt}" class="magic-icon">
   `;
 
   box.appendChild(div);
 
-  // relance l'animation fade-in
   div.classList.remove("show");
   void div.offsetWidth;
   div.classList.add("show");
 }
-
 
 function startCarousel() {
   stopCarousel();
@@ -138,8 +131,15 @@ function stopCarousel(forceClear = false) {
   }
 }
 
+// === Affichage du sondage ===
+function afficherAnimationFin() {
+  const anim = document.getElementById("end-animation");
+  if (anim) anim.style.display = "flex";
+}
+
 // === Initialisation ===
 document.addEventListener("DOMContentLoaded", () => {
+
   afficherTemps(0);
 
   document.getElementById("start")?.addEventListener("click", () => {
@@ -149,28 +149,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("stop")?.addEventListener("click", stopChrono);
   document.getElementById("reset")?.addEventListener("click", resetChrono);
+
+  // === Mini sondage simple ===
+  const quizButtons = document.querySelectorAll(".quiz-btn");
+  const quizMessage = document.getElementById("quiz-message");
+
+  quizButtons.forEach(button => {
+    button.addEventListener("click", () => {
+
+      const value = button.dataset.value;
+
+      const data = {
+        encoreFaim: value,
+        dureeRepas: elapsed,
+        date: new Date().toISOString()
+      };
+
+      const historique = JSON.parse(localStorage.getItem("digzenStats")) || [];
+      historique.push(data);
+      localStorage.setItem("digzenStats", JSON.stringify(historique));
+
+      quizButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+      });
+
+      if (quizMessage) {
+        quizMessage.textContent = "✔ Réponse enregistrée";
+      }
+    });
+  });
+
 });
 
 // === Wake Lock ===
 let wakeLock = null;
+
 async function keepScreenOn() {
   try {
-    if (!wakeLock) wakeLock = await navigator.wakeLock.request("screen");
+    if (!wakeLock && "wakeLock" in navigator) {
+      wakeLock = await navigator.wakeLock.request("screen");
+    }
+
     document.addEventListener("visibilitychange", async () => {
       if (!wakeLock && document.visibilityState === "visible") {
         wakeLock = await navigator.wakeLock.request("screen");
       }
     });
+
   } catch (err) {
     console.error(err);
   }
 }
 
-// === Animation fin ===
-function afficherAnimationFin() {
-  const anim = document.getElementById("end-animation");
-  if (anim) anim.style.display = "block";
-}
+
 
 
 

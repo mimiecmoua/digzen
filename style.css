@@ -200,6 +200,60 @@ button:hover {
   transform: scale(1.03);
 }
 
+/* === SONDAGE DANS LE CAROUSEL === */
+#end-animation {
+  display: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#quiz-container {
+  background: rgba(255,255,255,0.1); /* translucide comme les GIF */
+  backdrop-filter: blur(10px);       /* flou comme le carousel */
+  padding: 25px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+#quiz-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.quiz-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  background: rgba(18,17,17,0.7);  /* semi-transparent */
+  color: rgb(255,182,193);
+}
+
+.quiz-btn:hover {
+  transform: scale(1.05);
+}
+
+.quiz-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+#quiz-message {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #fff;
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
   .container {
@@ -243,39 +297,7 @@ button:hover {
   }
 }
 
-/* === ANIMATION FIN === */
-#end-animation {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
-  text-align: center;
-  backdrop-filter: blur(20px);
-}
 
-#celebration-gif {
-  width: 100%;
-  max-width: 450px;
-  height: auto;
-  border-radius: 20px;
-  animation: pop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-}
-
-@keyframes pop {
-  0% { 
-    transform: translate(-50%, -50%) scale(0.2); 
-    opacity: 0; 
-  }
-  70% { 
-    transform: translate(-50%, -50%) scale(1.1); 
-  }
-  100% { 
-    transform: translate(-50%, -50%) scale(1); 
-    opacity: 1; 
-  }
-}
 
 /* === FOOTER (EN BAS FIXE) === */
 .footer {
