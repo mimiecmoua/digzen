@@ -181,9 +181,9 @@ function afficherAnimationFin() {
       // === Envoi événement GA4 ===
       if (typeof gtag === "function") {
         gtag('event', 'sondage_click', {
-          'event_category': 'Sondage',
-          'event_label': value,
-          'value': elapsed
+        'event_category': 'Sondage',
+        'sondage_reponse': value,  // "oui" ou "non"
+        'duree_repas_ms': elapsed
         });
       }
     });
