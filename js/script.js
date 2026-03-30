@@ -37,11 +37,11 @@ function chrono() {
   elapsed = now - startTime;
   afficherTemps(elapsed);
 
-  // Fin du chrono de test = 5 sec (changer à 20*60*1000 pour 20 min)
+  // Fin du chrono après 20 min (20*60*1000)
   if (elapsed >= 20 * 60 * 1000) {
     stopChrono();
     stopCarousel(true);
-    afficherAnimationFin(); // affiche le sondage dans le carousel
+    afficherAnimationFin(); // affiche le sondage
   }
 }
 
@@ -71,10 +71,10 @@ function resetChrono() {
   afficherTemps(0);
   stopCarousel(true);
 
-  const anim = document.getElementById("end-animation");
-  if (anim) anim.style.display = "none";
+  const anim = document.getElementById("phrase-carousel");
+  if (anim) anim.innerHTML = "";
 
-  // Réactiver les boutons du quiz
+  // Réactiver les boutons du quiz si visibles
   const quizButtons = document.querySelectorAll(".quiz-btn");
   quizButtons.forEach(btn => {
     btn.disabled = false;
@@ -94,12 +94,10 @@ function afficherIcone(iconObj) {
 
   const div = document.createElement("div");
   div.className = "phrase-item";
-
   div.innerHTML = `<img src="${iconObj.src}" alt="${iconObj.alt}" class="magic-icon">`;
 
   box.appendChild(div);
 
-  // Animation apparition
   div.classList.remove("show");
   void div.offsetWidth;
   div.classList.add("show");
@@ -115,7 +113,6 @@ function startCarousel() {
     afficherIcone(magicIcons[carouselIndex]);
     carouselIndex = (carouselIndex + 1) % magicIcons.length;
 
-    // fin du carousel après 20 min si nécessaire
     if (elapsed >= 20 * 60 * 1000) stopCarousel(true);
   }, 10000);
 }
@@ -125,14 +122,13 @@ function stopCarousel(forceClear = false) {
     clearInterval(carouselInterval);
     carouselInterval = null;
   }
-
   if (forceClear) {
     const box = document.getElementById("phrase-carousel");
     if (box) box.innerHTML = "";
   }
 }
 
-// === Affichage du sondage DANS LE CAROUSEL ===
+// === Affichage du sondage DANS LE CAROUSEL avec GA4 ===
 function afficherAnimationFin() {
   const box = document.getElementById("phrase-carousel");
   if (!box) return;
@@ -157,7 +153,6 @@ function afficherAnimationFin() {
     </div>
   `;
 
-  // Réinitialiser événement des boutons
   const quizButtons = document.querySelectorAll(".quiz-btn");
   const quizMessage = document.getElementById("quiz-message");
 
@@ -169,16 +164,28 @@ function afficherAnimationFin() {
         dureeRepas: elapsed,
         date: new Date().toISOString()
       };
+
+      // Stockage local
       const historique = JSON.parse(localStorage.getItem("digzenStats")) || [];
       historique.push(data);
       localStorage.setItem("digzenStats", JSON.stringify(historique));
 
+      // Désactiver boutons après clic
       quizButtons.forEach(btn => {
         btn.disabled = true;
         btn.style.opacity = "0.5";
       });
 
       if (quizMessage) quizMessage.textContent = "✔ Réponse enregistrée";
+
+      // === Envoi événement GA4 ===
+      if (typeof gtag === "function") {
+        gtag('event', 'sondage_click', {
+          'event_category': 'Sondage',
+          'event_label': value,
+          'value': elapsed
+        });
+      }
     });
   });
 }
@@ -212,17 +219,3 @@ async function keepScreenOn() {
     console.error(err);
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
